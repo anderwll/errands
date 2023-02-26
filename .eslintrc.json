@@ -21,19 +21,12 @@
     },
     "plugins": ["react", "@typescript-eslint", "eslint-plugin-import-helpers", "prettier"],
     "rules": {
+        "no-case-declarations": "off",
+        "no-useless-escape": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-alert": "off",
         "camelcase": "off",
         "import/no-unresolved": "error",
-        "@typescript-eslint/naming-convention": [
-            "error",
-            {
-                "selector": "interface",
-                "format": ["PascalCase"],
-                "custom": {
-                    "regex": "^I[A-Z]",
-                    "match": true
-                }
-            }
-        ],
         "class-methods-use-this": "off",
         "import/prefer-default-export": "off",
         "no-shadow": "off",
@@ -75,7 +68,8 @@
         ],
         "react/react-in-jsx-scope": "off",
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"]
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/naming-convention": "off"
     },
     "settings": {
         "import/resolver": {
