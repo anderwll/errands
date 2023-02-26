@@ -2,6 +2,7 @@ import { MailOutline, PersonOutlineOutlined } from '@mui/icons-material';
 import { Button, Grid, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
+import MyAlert from '../../../Alert';
 import MyTextField from '../../MyTextField';
 import MyTextFieldPassword from '../../MyTextFieldPassword';
 
@@ -159,6 +160,7 @@ function FormSignup() {
                     Cadastrar
                 </Button>
             </Grid>
+            <MyAlert open={false} type="success" info="Conta criada com sucesso." />
         </Grid>
     );
 }

@@ -12,6 +12,7 @@ const MyPaper = styled(Paper)(() => ({
     overflow: 'hidden',
     gap: '20px',
     borderRadius: 12,
+    zIndex: 9999,
 }));
 
 export default MyPaper;

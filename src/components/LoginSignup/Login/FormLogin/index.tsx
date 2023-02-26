@@ -2,6 +2,7 @@ import { MailOutline } from '@mui/icons-material';
 import { Button, Grid, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
+import MyAlert from '../../../Alert';
 import MyTextField from '../../MyTextField';
 import MyTextFieldPassword from '../../MyTextFieldPassword';
 
@@ -9,6 +10,7 @@ function FormLogin() {
     const msgInfo = 'Use sua conta para acessar o sistema';
     const [info, setInfo] = useState(msgInfo);
     const [error, setError] = useState(false);
+    const [open, setOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -68,6 +70,16 @@ function FormLogin() {
         }
     };
 
+    const handleAlert = () => {
+        if (!open) {
+            setOpen(true);
+
+            setTimeout(() => {
+                setOpen(false);
+            }, 2000);
+        }
+    };
+
     return (
         <Grid item>
             <Grid item>
@@ -108,7 +120,7 @@ function FormLogin() {
                     variant="text"
                     color="inherit"
                     sx={{ p: 0.2, textTransform: 'capitalize', fontSize: 12 }}
-                    onClick={() => alert('Não disponível no momento.')}
+                    onClick={handleAlert}
                 >
                     Esqueceu sua senha?
                 </Button>
@@ -124,6 +136,7 @@ function FormLogin() {
                     Login
                 </Button>
             </Grid>
+            <MyAlert open={open} type="error" info="Não disponível no momento." />
         </Grid>
     );
 }

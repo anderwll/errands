@@ -1,10 +1,22 @@
 import { Facebook, Twitter, Google } from '@mui/icons-material';
 import { Grid, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
+import MyAlert from '../../Alert';
 import ButtonRegistration from './ButtonRegistration';
 
 function OtherRegistrationsForms() {
+    const [open, setOpen] = useState(false);
+
+    const handleAlert = () => {
+        if (!open) {
+            setOpen(true);
+            setTimeout(() => {
+                setOpen(false);
+            }, 2000);
+        }
+    };
+
     return (
         <Grid item>
             <Typography variant="subtitle2" color="initial">
@@ -19,10 +31,11 @@ function OtherRegistrationsForms() {
                     marginTop: '10px',
                 }}
             >
-                <ButtonRegistration icon={<Facebook />} color="primary" />
-                <ButtonRegistration icon={<Twitter />} color="info" />
-                <ButtonRegistration icon={<Google />} color="error" />
+                <ButtonRegistration icon={<Facebook />} color="primary" onClick={handleAlert} />
+                <ButtonRegistration icon={<Twitter />} color="info" onClick={handleAlert} />
+                <ButtonRegistration icon={<Google />} color="error" onClick={handleAlert} />
             </Grid>
+            <MyAlert open={open} type="error" info="Tente novamente mais tarde." />
         </Grid>
     );
 }

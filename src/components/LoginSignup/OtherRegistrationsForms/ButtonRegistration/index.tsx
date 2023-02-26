@@ -13,15 +13,12 @@ interface ButtonRegistrationProps {
         | 'info'
         | 'warning'
         | undefined;
+    onClick: () => void;
 }
 
-function ButtonRegistration({ icon, color }: ButtonRegistrationProps) {
-    const handleAlert = () => {
-        alert('Tente novamente mais tarde');
-    };
-
+function ButtonRegistration({ icon, color, onClick }: ButtonRegistrationProps) {
     return (
-        <Fab color={color} sx={{ width: '45px', height: '45px' }} onClick={handleAlert}>
+        <Fab color={color} sx={{ width: '45px', height: '45px' }} onClick={onClick}>
             {icon}
         </Fab>
     );
