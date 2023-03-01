@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import ErrandsPage from '../pages/ErrandsPage';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
 
@@ -10,7 +11,9 @@ function AppRoutes() {
             <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/cadastro" element={<SignupPage />} />
-                <Route path="/home" element={<h1>Home</h1>} />
+                <Route path="/recados" element={<ErrandsPage />} />
+
+                <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
         </BrowserRouter>
     );

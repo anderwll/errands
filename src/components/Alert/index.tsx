@@ -1,29 +1,25 @@
-import { Alert, AlertTitle, Grid } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import React from 'react';
+
+export type TypeAlert = 'error' | 'success' | 'warning';
 
 interface MyAlertProps {
     open: boolean;
-    type: 'error' | 'success';
+    type: TypeAlert;
     info: string;
+    handleClose: () => void;
 }
 
-function MyAlert({ open, type, info }: MyAlertProps) {
+function MyAlert({ open, type, info, handleClose }: MyAlertProps) {
     return (
-        <Grid item position="fixed" top="15px" zIndex="99" width="285px">
-            {open && type === 'success' && (
-                <Alert severity="success">
-                    <AlertTitle>Success</AlertTitle>
-                    {info}
-                </Alert>
-            )}
-
-            {open && type === 'error' && (
-                <Alert severity="error">
-                    <AlertTitle>Error</AlertTitle>
-                    {info}
-                </Alert>
-            )}
-        </Grid>
+        <Snackbar
+            open={open}
+            autoHideDuration={2000}
+            onClose={handleClose}
+            anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+        >
+            <Alert severity={type}>{info}</Alert>
+        </Snackbar>
     );
 }
 

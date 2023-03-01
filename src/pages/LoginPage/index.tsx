@@ -4,6 +4,7 @@ import React from 'react';
 import Footer from '../../components/Footer';
 import Login from '../../components/LoginSignup/Login';
 import MyPaper from '../../components/LoginSignup/MyPaper';
+import Spinner from '../../components/Spinner';
 
 function LoginPage() {
     return (
@@ -26,6 +27,7 @@ function LoginPage() {
                 </MyPaper>
                 <Footer />
             </Grid>
+            <Spinner />
         </Grid>
     );
 }

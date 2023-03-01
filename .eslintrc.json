@@ -21,6 +21,9 @@
     },
     "plugins": ["react", "@typescript-eslint", "eslint-plugin-import-helpers", "prettier"],
     "rules": {
+        "react/jsx-no-useless-fragment": "off",
+        "no-param-reassign": "off",
+        "import/no-extraneous-dependencies": "off",
         "no-case-declarations": "off",
         "no-useless-escape": "off",
         "@typescript-eslint/no-explicit-any": "off",
@@ -51,12 +54,6 @@
                     "order": "asc",
                     "ignoreCase": true
                 }
-            }
-        ],
-        "import/no-extraneous-dependencies": [
-            "error",
-            {
-                "devDependencies": ["**/*.spec.js"]
             }
         ],
         "prettier/prettier": "error",

@@ -1,8 +1,12 @@
 import { MailOutline } from '@mui/icons-material';
 import { Button, Grid, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import MyAlert from '../../../Alert';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { getUserById } from '../../../../store/modules/userLogged/userLoggedSlice';
+import { getUsers, handleUsers } from '../../../../store/modules/users/usersSlice';
+import MyAlert, { TypeAlert } from '../../../Alert';
 import MyTextField from '../../MyTextField';
 import MyTextFieldPassword from '../../MyTextFieldPassword';
 
@@ -10,9 +14,33 @@ function FormLogin() {
     const msgInfo = 'Use sua conta para acessar o sistema';
     const [info, setInfo] = useState(msgInfo);
     const [error, setError] = useState(false);
-    const [open, setOpen] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+    const [typeAlert, setTypeAlert] = useState<TypeAlert>('success');
+    const [infoAlert, setInfoAlert] = useState('');
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    // const responseOfUsers = useAppSelector((state) => state.users);
+    const dataOfUsers = useAppSelector(handleUsers);
+    const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
+
+    const handleAlert = (info: string, type: TypeAlert) => {
+        setInfoAlert(info);
+        setTypeAlert(type);
+        setOpenAlert(!openAlert);
+    };
+
+    const clearInputs = () => {
+        setEmail('');
+        setPassword('');
+    };
+
+    useEffect(() => {
+        dispatch(getUsers());
+    }, [dispatch]);
 
     const handleValidator = (value: string, type: string) => {
         switch (type) {
@@ -67,17 +95,25 @@ function FormLogin() {
         if (!email || !password) {
             setInfo('Preencha todos os campos.');
             setError(true);
+            return;
         }
-    };
 
-    const handleAlert = () => {
-        if (!open) {
-            setOpen(true);
+        const exist = dataOfUsers.find(
+            (user) => user.email === email && user.password === password,
+        );
 
-            setTimeout(() => {
-                setOpen(false);
-            }, 2000);
+        if (!exist) {
+            handleAlert('Email ou senha incorretos.', 'error');
+            return;
         }
+
+        handleAlert('Logando...', 'success');
+        dispatch(getUserById(exist.id));
+        clearInputs();
+
+        setTimeout(() => {
+            navigate('/recados');
+        }, 1000);
     };
 
     return (
@@ -120,7 +156,7 @@ function FormLogin() {
                     variant="text"
                     color="inherit"
                     sx={{ p: 0.2, textTransform: 'capitalize', fontSize: 12 }}
-                    onClick={handleAlert}
+                    onClick={() => handleAlert('Não disponível no momento.', 'warning')}
                 >
                     Esqueceu sua senha?
                 </Button>
@@ -136,7 +172,12 @@ function FormLogin() {
                     Login
                 </Button>
             </Grid>
-            <MyAlert open={open} type="error" info="Não disponível no momento." />
+            <MyAlert
+                open={openAlert}
+                handleClose={() => setOpenAlert(false)}
+                type={typeAlert}
+                info={infoAlert}
+            />
         </Grid>
     );
 }

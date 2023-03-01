@@ -1,8 +1,10 @@
 import { MailOutline, PersonOutlineOutlined } from '@mui/icons-material';
 import { Button, Grid, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import MyAlert from '../../../Alert';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { saveUser } from '../../../../store/modules/users/usersSlice';
+import MyAlert, { TypeAlert } from '../../../Alert';
 import MyTextField from '../../MyTextField';
 import MyTextFieldPassword from '../../MyTextFieldPassword';
 
@@ -10,10 +12,50 @@ function FormSignup() {
     const msgInfo = 'Use seu email para realizar o cadastro.';
     const [info, setInfo] = useState(msgInfo);
     const [error, setError] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+    const [typeAlert, setTypeAlert] = useState<TypeAlert>('success');
+    const [infoAlert, setInfoAlert] = useState('');
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
+
+    const responseOfUsers = useAppSelector((state) => state.users);
+    const dispatch = useAppDispatch();
+
+    const handleAlert = (info: string, type: TypeAlert) => {
+        setInfoAlert(info);
+        setTypeAlert(type);
+        setOpenAlert(!openAlert);
+    };
+
+    const clearInputs = () => {
+        setName('');
+        setEmail('');
+        setPassword('');
+        setRePassword('');
+    };
+
+    useEffect(() => {
+        if (
+            !responseOfUsers.loading &&
+            responseOfUsers.success &&
+            responseOfUsers.message !== '' &&
+            responseOfUsers.message !== 'Usuários buscado com sucesso.'
+        ) {
+            handleAlert(responseOfUsers.message, 'success');
+            clearInputs();
+        }
+        if (
+            !responseOfUsers.loading &&
+            !responseOfUsers.success &&
+            responseOfUsers.message !== '' &&
+            responseOfUsers.message !== 'Usuários buscado com sucesso.'
+        ) {
+            handleAlert(responseOfUsers.message, 'error');
+        }
+    }, [responseOfUsers]);
 
     const handleValidator = (value: string, type: string) => {
         switch (type) {
@@ -97,7 +139,10 @@ function FormSignup() {
         if (!name || !email || !password || !rePassword) {
             setInfo('Preencha todos os campos.');
             setError(true);
+            return;
         }
+
+        dispatch(saveUser({ name, email, password }));
     };
 
     return (
@@ -160,7 +205,12 @@ function FormSignup() {
                     Cadastrar
                 </Button>
             </Grid>
-            <MyAlert open={false} type="success" info="Conta criada com sucesso." />
+            <MyAlert
+                open={openAlert}
+                handleClose={() => setOpenAlert(false)}
+                type={typeAlert}
+                info={infoAlert}
+            />
         </Grid>
     );
 }
