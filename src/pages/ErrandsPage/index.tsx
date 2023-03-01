@@ -1,50 +1,33 @@
-import { AccountCircle, Menu } from '@mui/icons-material';
-import { AppBar, Box, Grid, IconButton, Toolbar, Typography } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getUserById } from '../../store/modules/userLogged/userLoggedSlice';
 
 function ErrandsPage() {
     const responseOfUserLogged = useAppSelector((state) => state.userLogged);
     // const responseOfUsers = useAppSelector((state) => state.users);
-    // const dispatch = useAppDispatch();
-
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const getIdLocalStorage = () => {
+        return JSON.parse(localStorage.getItem('idUserLogged') || '');
+    };
+
     useEffect(() => {
-        if (!responseOfUserLogged.success) {
+        if (!getIdLocalStorage()) {
             navigate('/');
         }
+
+        dispatch(getUserById(getIdLocalStorage()));
     }, [navigate]);
 
-    useEffect(() => {
-        console.log(responseOfUserLogged);
-    }, [responseOfUserLogged]);
-
     return (
-        <Grid container>
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static" color="transparent">
-                    <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ mr: 2 }}
-                        >
-                            <Menu />
-                        </IconButton>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                            Meus Recados
-                        </Typography>
-                        <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-                            <AccountCircle />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-            </Box>
+        <Grid item>
+            <Typography variant="h4" color="initial">
+                Página recados
+            </Typography>
         </Grid>
     );
 }

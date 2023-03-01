@@ -27,6 +27,10 @@ function FormLogin() {
 
     const navigate = useNavigate();
 
+    const setIdLocalStorage = (id: string) => {
+        localStorage.setItem('idUserLogged', JSON.stringify(id));
+    };
+
     const handleAlert = (info: string, type: TypeAlert) => {
         setInfoAlert(info);
         setTypeAlert(type);
@@ -40,6 +44,7 @@ function FormLogin() {
 
     useEffect(() => {
         dispatch(getUsers());
+        setIdLocalStorage('');
     }, [dispatch]);
 
     const handleValidator = (value: string, type: string) => {
@@ -108,6 +113,7 @@ function FormLogin() {
         }
 
         handleAlert('Logando...', 'success');
+        setIdLocalStorage(exist.id);
         dispatch(getUserById(exist.id));
         clearInputs();
 
