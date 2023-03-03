@@ -2,12 +2,13 @@ import { Typography, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import MyCard from '../../components/Errrand/Card';
+import Spinner from '../../components/Spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getUserById } from '../../store/modules/userLogged/userLoggedSlice';
+import { getErrands, handleErrands } from '../../store/modules/errands/errandsSlice';
 
 function ErrandsPage() {
-    const responseOfUserLogged = useAppSelector((state) => state.userLogged);
-    // const responseOfUsers = useAppSelector((state) => state.users);
+    const dataOfErrands = useAppSelector(handleErrands);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -20,14 +21,35 @@ function ErrandsPage() {
             navigate('/');
         }
 
-        dispatch(getUserById(getIdLocalStorage()));
+        dispatch(getErrands(getIdLocalStorage()));
     }, [navigate]);
 
     return (
-        <Grid item>
-            <Typography variant="h4" color="initial">
-                Página recados
-            </Typography>
+        <Grid container spacing={2} width="calc(100vw - 80px)" display="flex">
+            <Grid item xs={12}>
+                <Typography variant="h4" color="initial">
+                    Meus recados
+                </Typography>
+            </Grid>
+
+            {dataOfErrands &&
+                dataOfErrands.map((e) => {
+                    return (
+                        <MyCard
+                            key={e.id}
+                            title={e.title}
+                            description={e.description}
+                            date={e.date}
+                            onClickEdit={() => alert(`Editar ${e.id}`)}
+                            onClickDelet={() => alert(`Deletar ${e.id}`)}
+                            onClickArchive={() => alert(`Arquivar ${e.id}`)}
+                            isChecked={e.check}
+                            onClickCheck={() => alert(`Check ${e.id}`)}
+                        />
+                    );
+                })}
+
+            <Spinner />
         </Grid>
     );
 }

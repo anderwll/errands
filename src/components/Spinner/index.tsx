@@ -6,10 +6,11 @@ import { useAppSelector } from '../../store/hooks';
 function Spinner() {
     const loadingOfUsers = useAppSelector((state) => state.users.loading);
     const loadingOfUserLogged = useAppSelector((state) => state.userLogged.loading);
+    const loadingOfErrands = useAppSelector((state) => state.errands.loading);
 
     return (
         <>
-            {(loadingOfUsers || loadingOfUserLogged) && (
+            {(loadingOfUsers || loadingOfUserLogged || loadingOfErrands) && (
                 <Box
                     sx={{
                         position: 'absolute',

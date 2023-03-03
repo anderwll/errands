@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { apiGet } from '../../../services/ApiService';
-import { ResponseAPI } from '../typeStore';
+import { ResponseAPI, InitialStateUserLogged } from '../typeStore';
 
-const initialState = {
+const initialState: InitialStateUserLogged = {
     loading: false,
     success: false,
     message: '',

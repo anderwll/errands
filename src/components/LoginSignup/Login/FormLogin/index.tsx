@@ -104,7 +104,7 @@ function FormLogin() {
         }
 
         const exist = dataOfUsers.find(
-            (user) => user.email === email && user.password === password,
+            (user: any) => user.email === email && user.password === password,
         );
 
         if (!exist) {

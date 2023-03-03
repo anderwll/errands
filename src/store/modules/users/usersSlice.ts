@@ -16,7 +16,6 @@ const usersAdapter = createEntityAdapter<User>({
 export const { selectAll: handleUsers, selectById: handleUserById } =
     usersAdapter.getSelectors<RootState>((state) => state.users);
 
-// BUSCA TODOS USUÁRIOS
 export const getUsers = createAsyncThunk<ResponseAPI>('users/getUsers', async () => {
     const response = await apiGet('/users');
 
@@ -41,11 +40,14 @@ export const attUser = createAsyncThunk<ResponseAPI, UpdateUserRequest>(
     },
 );
 
-export const deleteUser = createAsyncThunk('users/deleteUser', async (id: string) => {
-    const response = await apiDelete(`/users/${id}`);
+export const deleteUser = createAsyncThunk<ResponseAPI, string>(
+    'users/deleteUser',
+    async (id: string) => {
+        const response = await apiDelete(`/users/${id}`);
 
-    return response;
-});
+        return response;
+    },
+);
 
 const usersSlice = createSlice({
     name: 'users',
