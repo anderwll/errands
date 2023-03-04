@@ -9,7 +9,7 @@ import {
     Grid,
     Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import OptionsErrand from '../OptionsErrand';
 
@@ -45,6 +45,10 @@ function MyCard({
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    useEffect(() => {
+        handleClose();
+    }, [onClickDelet, onClickEdit, onClickArchive]);
 
     return (
         <Grid item xs={12} sm={6} md={5} lg={4} xl={3}>

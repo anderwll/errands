@@ -2,8 +2,13 @@ import { Description, Title, Check, Close } from '@mui/icons-material';
 import { Modal, Typography, Box, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
-import { useAppDispatch } from '../../../store/hooks';
-import { saveErrand } from '../../../store/modules/errands/errandsSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {
+    attErrand,
+    handleErrandById,
+    saveErrand,
+} from '../../../store/modules/errands/errandsSlice';
+import { Errand } from '../../../store/modules/typeStore';
 import MyTextFieldErrand from '../MyTextfieldErrand';
 
 const style = {
@@ -29,7 +34,7 @@ interface MyModalProps {
 }
 
 function MyModal({ idErrand, open, handleClose }: MyModalProps) {
-    const [id, setId] = useState('');
+    const [id, setId] = useState<string>('');
     const msgInfo = 'Crie um novo recado...';
     const msgInfoAtt = 'Atualize seu recado...';
     const [info, setInfo] = useState(msgInfo);
@@ -38,6 +43,7 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
     const [description, setDescription] = useState('');
 
     const dispatch = useAppDispatch();
+    const errand = useAppSelector((state) => handleErrandById(state, id)) as Errand;
 
     const getIdLocalStorage = () => {
         return JSON.parse(localStorage.getItem('idUserLogged') || '');
@@ -45,11 +51,23 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
 
     useEffect(() => {
         if (idErrand) {
-            console.log(idErrand);
             setId(idErrand);
             setInfo(msgInfoAtt);
+        } else {
+            setId('');
+            setInfo(msgInfo);
         }
     }, [idErrand]);
+
+    useEffect(() => {
+        if (errand) {
+            setTitle(errand.title);
+            setDescription(errand.description);
+        } else {
+            setTitle('');
+            setDescription('');
+        }
+    }, [errand]);
 
     const clearInputs = () => {
         setTitle('');
@@ -67,7 +85,7 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
             setError(true);
             return;
         }
-        setInfo(msgInfo);
+        setInfo(!id ? msgInfo : msgInfoAtt);
         setError(false);
     };
 
@@ -104,6 +122,26 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
         handleClose();
     };
 
+    const handleUpdate = () => {
+        if (!title || !description) {
+            handleValidator('');
+            return;
+        }
+
+        dispatch(
+            attErrand({
+                idUser: getIdLocalStorage(),
+                idErrand: id,
+                dataUpdateErrand: {
+                    title,
+                    description,
+                },
+            }),
+        );
+
+        handleClose();
+    };
+
     return (
         <Modal
             open={open}
@@ -113,7 +151,7 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
         >
             <Box sx={style}>
                 <Box sx={{ mb: 2 }}>
-                    <Typography variant="h4">Novo Recado</Typography>
+                    <Typography variant="h4">{!id ? 'Novo Recado' : 'Editar Recado'}</Typography>
                     <Typography
                         variant="subtitle2"
                         color={error ? 'orange' : 'inherit'}
@@ -153,7 +191,7 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                         variant="contained"
                         color="secondary"
                         sx={{ p: 1.2 }}
-                        onClick={handleCreate}
+                        onClick={!id ? handleCreate : handleUpdate}
                     >
                         <Check sx={{ mr: 1 }} />
                         Salvar

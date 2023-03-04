@@ -72,7 +72,7 @@ const apiPut = async (rota: string, dados: any): Promise<ResponseAPI> => {
 
 const apiDelete = async (rota: string): Promise<ResponseAPI> => {
     try {
-        const response: AxiosResponse = await axios.post(rota);
+        const response: AxiosResponse = await axios.delete(rota);
 
         const responseAPI: ResponseAPI = {
             success: response.data.success,

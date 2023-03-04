@@ -41,7 +41,7 @@ export interface CreateNewErrandRequest {
 export interface UpdateErrandRequest {
     idUser: string;
     idErrand: string;
-    dataUpdateErrand: Omit<Errand, 'id' | 'date'>;
+    dataUpdateErrand: Partial<Omit<Errand, 'id' | 'date'>>;
 }
 
 export type DeleteErrandRequest = Omit<UpdateErrandRequest, 'dataUpdateErrand'>;

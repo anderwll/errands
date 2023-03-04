@@ -12,6 +12,7 @@ function FormSignup() {
     const msgInfo = 'Use seu email para realizar o cadastro.';
     const [info, setInfo] = useState(msgInfo);
     const [error, setError] = useState(false);
+
     const [openAlert, setOpenAlert] = useState(false);
     const [typeAlert, setTypeAlert] = useState<TypeAlert>('success');
     const [infoAlert, setInfoAlert] = useState('');
