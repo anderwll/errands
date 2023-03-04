@@ -1,4 +1,4 @@
-import { Archive, Delete, Edit } from '@mui/icons-material';
+import { Archive, Delete, Edit, Unarchive } from '@mui/icons-material';
 import { alpha, Divider, Menu, MenuItem, MenuProps, styled } from '@mui/material';
 import React from 'react';
 
@@ -48,6 +48,7 @@ interface OptionsErrandProps {
     handleClose: () => void;
     handleEdit: () => void;
     handleDelete: () => void;
+    modeArchive: boolean;
     handleArchive: () => void;
 }
 
@@ -57,6 +58,7 @@ function OptionsErrand({
     handleClose,
     handleEdit,
     handleDelete,
+    modeArchive,
     handleArchive,
 }: OptionsErrandProps) {
     return (
@@ -79,8 +81,8 @@ function OptionsErrand({
             </MenuItem>
             <Divider sx={{ my: 0.5 }} />
             <MenuItem onClick={handleArchive} disableRipple>
-                <Archive />
-                Arquivar
+                {modeArchive ? <Unarchive /> : <Archive />}
+                {modeArchive ? 'Desarquivar' : 'Arquivar'}
             </MenuItem>
         </StyledMenu>
     );

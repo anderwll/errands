@@ -13,7 +13,7 @@ interface MyAlertProps {
 function MyAlert({ open, type, info, handleClose }: MyAlertProps) {
     return (
         <Snackbar
-            open={open || open}
+            open={open}
             autoHideDuration={2000}
             onClose={handleClose}
             anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}

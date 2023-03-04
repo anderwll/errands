@@ -40,7 +40,7 @@ export interface CreateNewErrandRequest {
 
 export interface UpdateErrandRequest {
     idUser: string;
-    idErrand: string;
+    id: string;
     dataUpdateErrand: Partial<Omit<Errand, 'id' | 'date'>>;
 }
 

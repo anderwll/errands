@@ -131,7 +131,7 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
         dispatch(
             attErrand({
                 idUser: getIdLocalStorage(),
-                idErrand: id,
+                id,
                 dataUpdateErrand: {
                     title,
                     description,

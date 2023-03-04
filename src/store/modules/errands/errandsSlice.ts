@@ -35,7 +35,7 @@ export const getErrands = createAsyncThunk<ResponseAPI, string>(
 export const getErrandById = createAsyncThunk<ResponseAPI, GetByIdErrandRequest>(
     'errands/getErrandById',
     async (params: GetByIdErrandRequest) => {
-        const response = await apiGet(`/users/${params.idUser}/errands/${params.idErrand}`);
+        const response = await apiGet(`/users/${params.idUser}/errands/${params.id}`);
 
         return response;
     },
@@ -57,7 +57,7 @@ export const attErrand = createAsyncThunk<ResponseAPI, UpdateErrandRequest>(
     'errands/attErrand',
     async (params: UpdateErrandRequest) => {
         const response = await apiPut(
-            `/users/${params.idUser}/errands/${params.idErrand}`,
+            `/users/${params.idUser}/errands/${params.id}`,
             params.dataUpdateErrand,
         );
 
@@ -68,7 +68,7 @@ export const attErrand = createAsyncThunk<ResponseAPI, UpdateErrandRequest>(
 export const deleteErrand = createAsyncThunk<ResponseAPI, DeleteErrandRequest>(
     'errands/deleteErrand',
     async (params: DeleteErrandRequest) => {
-        const response = await apiDelete(`/users/${params.idUser}/errands/${params.idErrand}`);
+        const response = await apiDelete(`/users/${params.idUser}/errands/${params.id}`);
 
         return response;
     },
@@ -145,7 +145,7 @@ const errandsSlice = createSlice({
         });
         builder.addCase(deleteErrand.fulfilled, (state, action: PayloadAction<ResponseAPI>) => {
             if (action.payload.success) {
-                errandsAdapter.removeOne(state, action.payload.data);
+                errandsAdapter.removeOne(state, action.payload.data.id);
             }
 
             state.loading = false;

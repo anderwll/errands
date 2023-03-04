@@ -19,6 +19,7 @@ interface MyCardProps {
     date: string;
     onClickEdit: () => void;
     onClickDelet: () => void;
+    modeArchive: boolean;
     onClickArchive: () => void;
     isChecked: boolean;
     onClickCheck: () => void;
@@ -33,6 +34,7 @@ function MyCard({
     onClickArchive,
     onClickCheck,
     isChecked,
+    modeArchive,
 }: MyCardProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -88,7 +90,7 @@ function MyCard({
                         icon={<GradeOutlined />}
                         checkedIcon={<Grade />}
                         sx={{ p: 0 }}
-                        color="secondary"
+                        color="warning"
                         onClick={onClickCheck}
                         checked={isChecked}
                     />
@@ -103,6 +105,7 @@ function MyCard({
                 handleClose={handleClose}
                 handleEdit={onClickEdit}
                 handleDelete={onClickDelet}
+                modeArchive={modeArchive}
                 handleArchive={onClickArchive}
             />
         </Grid>

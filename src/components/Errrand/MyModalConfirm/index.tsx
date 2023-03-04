@@ -35,7 +35,7 @@ function MyModalConfirm({ idErrand, open, handleClose }: MyModalConfirmProps) {
     };
 
     const handleDelete = () => {
-        dispatch(deleteErrand({ idUser: getIdLocalStorage(), idErrand }));
+        dispatch(deleteErrand({ idUser: getIdLocalStorage(), id: idErrand }));
         handleClose();
     };
 
