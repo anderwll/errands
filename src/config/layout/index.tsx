@@ -1,4 +1,11 @@
-import { AccountCircle, Menu, Dashboard, Description, Settings } from '@mui/icons-material';
+import {
+    AccountCircle,
+    Menu,
+    Dashboard,
+    Description,
+    Settings,
+    Archive,
+} from '@mui/icons-material';
 import {
     Box,
     CSSObject,
@@ -95,6 +102,11 @@ const listItem = [
         text: 'Meus Recados',
         path: '/recados',
         icon: <Description />,
+    },
+    {
+        text: 'Arquivados',
+        path: '/arquivados',
+        icon: <Archive />,
     },
     {
         text: 'Configurações',

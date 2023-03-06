@@ -167,6 +167,7 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                         label="Titulo"
                         value={title}
                         onChange={(e) => handleChange(e.target.value, 'title')}
+                        sx={{ padding: '2px 0', mb: '15px' }}
                     />
                     <MyTextFieldErrand
                         icon={<Description sx={{ fontSize: 18 }} />}
@@ -176,6 +177,7 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                         rows={3}
                         value={description}
                         onChange={(e) => handleChange(e.target.value, 'description')}
+                        sx={{ padding: '2px 0', mb: '15px' }}
                     />
                 </Box>
                 <Box

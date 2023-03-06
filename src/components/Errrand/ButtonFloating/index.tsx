@@ -9,7 +9,7 @@ interface ButtonFloatingProps {
 function ButtonFloating({ onClick }: ButtonFloatingProps) {
     return (
         <Box sx={{ position: 'fixed', bottom: 10, right: 10 }}>
-            <Fab color="secondary" variant="extended" onClick={onClick}>
+            <Fab color="secondary" variant="extended" onClick={onClick} sx={{ p: 3 }}>
                 <Add sx={{ mr: 1 }} />
                 Novo
             </Fab>

@@ -3,18 +3,20 @@ import React from 'react';
 
 interface MyTextFieldProps {
     icon: any;
-    label: string;
+    label?: string;
+    placeholder?: string;
     type: React.HTMLInputTypeAttribute | undefined;
     value: string;
     onChange: (e: any) => void;
 }
 
-function MyTextField({ icon, label, type, value, onChange }: MyTextFieldProps) {
+function MyTextField({ icon, label, placeholder, type, value, onChange }: MyTextFieldProps) {
     return (
         <TextField
             fullWidth
             variant="standard"
             label={label}
+            placeholder={placeholder}
             type={type}
             InputProps={{
                 startAdornment: <InputAdornment position="start">{icon}</InputAdornment>,

@@ -3,12 +3,13 @@ import React from 'react';
 
 interface MyTextFieldErrandProps {
     icon: any;
-    label: string;
+    label?: string;
     type: React.HTMLInputTypeAttribute | undefined;
     value: string;
     onChange: (e: any) => void;
     multiline?: boolean;
     rows?: number;
+    sx?: any;
 }
 
 function MyTextFieldErrand({
@@ -19,6 +20,7 @@ function MyTextFieldErrand({
     onChange,
     multiline,
     rows,
+    sx,
 }: MyTextFieldErrandProps) {
     return (
         <TextField
@@ -29,7 +31,7 @@ function MyTextFieldErrand({
             InputProps={{
                 startAdornment: <InputAdornment position="start">{icon}</InputAdornment>,
             }}
-            sx={{ padding: '2px 0', mb: '15px' }}
+            sx={sx}
             value={value}
             onChange={onChange}
             multiline={multiline}

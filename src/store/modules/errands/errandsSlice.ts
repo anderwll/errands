@@ -14,6 +14,7 @@ import {
     UpdateErrandRequest,
     DeleteErrandRequest,
     GetByIdErrandRequest,
+    GetErrandsRequest,
 } from '../typeStore';
 
 const errandsAdapter = createEntityAdapter<Errand>({
@@ -23,10 +24,10 @@ const errandsAdapter = createEntityAdapter<Errand>({
 export const { selectAll: handleErrands, selectById: handleErrandById } =
     errandsAdapter.getSelectors<RootState>((state) => state.errands);
 
-export const getErrands = createAsyncThunk<ResponseAPI, string>(
+export const getErrands = createAsyncThunk<ResponseAPI, GetErrandsRequest>(
     'errands/getErrands',
-    async (idUser: string) => {
-        const response = await apiGet(`/users/${idUser}/errands`);
+    async (params: GetErrandsRequest) => {
+        const response = await apiGet(`/users/${params.idUser}/errands`, params.filters);
 
         return response;
     },
@@ -131,7 +132,10 @@ const errandsSlice = createSlice({
         });
         builder.addCase(attErrand.fulfilled, (state, action: PayloadAction<ResponseAPI>) => {
             if (action.payload.success) {
-                errandsAdapter.updateOne(state, action.payload.data);
+                errandsAdapter.updateOne(state, {
+                    id: action.payload.data.id,
+                    changes: action.payload.data,
+                });
             }
 
             state.loading = false;

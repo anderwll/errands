@@ -47,3 +47,11 @@ export interface UpdateErrandRequest {
 export type DeleteErrandRequest = Omit<UpdateErrandRequest, 'dataUpdateErrand'>;
 
 export type GetByIdErrandRequest = Omit<UpdateErrandRequest, 'dataUpdateErrand'>;
+
+export interface GetErrandsRequest {
+    idUser: string;
+    filters?: {
+        title?: string;
+        filed?: boolean;
+    };
+}

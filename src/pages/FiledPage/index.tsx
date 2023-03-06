@@ -1,10 +1,9 @@
-import { Search, Close } from '@mui/icons-material';
-import { Typography, Grid, Button, ButtonGroup, InputAdornment, TextField } from '@mui/material';
+import { Close, Search } from '@mui/icons-material';
+import { Typography, Grid, ButtonGroup, TextField, InputAdornment, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MyAlert, { TypeAlert } from '../../components/Alert';
-import ButtonFloating from '../../components/Errrand/ButtonFloating';
 import MyCard from '../../components/Errrand/Card';
 import MyModal from '../../components/Errrand/MyModal';
 import MyModalConfirm from '../../components/Errrand/MyModalConfirm';
@@ -12,7 +11,7 @@ import Spinner from '../../components/Spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { attErrand, getErrands, handleErrands } from '../../store/modules/errands/errandsSlice';
 
-function ErrandsPage() {
+function FiledPage() {
     const [openModal, setOpenModal] = useState(false);
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
     const [idErrand, setIdErrand] = useState('');
@@ -46,10 +45,10 @@ function ErrandsPage() {
     }, [navigate]);
 
     useEffect(() => {
-        if (!search) {
+        if (!activeSearch) {
             dispatch(getErrands({ idUser: getIdLocalStorage() }));
         }
-    }, [dispatch, search]);
+    }, [dispatch, activeSearch]);
 
     useEffect(() => {
         if (
@@ -69,10 +68,6 @@ function ErrandsPage() {
         }
     }, [openModal]);
 
-    const handleModal = () => {
-        setOpenModal(!openModal);
-    };
-
     const handleModalUpdate = (id: string) => {
         setIdErrand(id);
         setOpenModal(!openModal);
@@ -83,7 +78,7 @@ function ErrandsPage() {
         setOpenModalConfirm(!openModalConfirm);
     };
 
-    const handleArchive = (id: string, filed: boolean) => {
+    const handleUnArchive = (id: string, filed: boolean) => {
         dispatch(
             attErrand({
                 idUser: getIdLocalStorage(),
@@ -110,7 +105,7 @@ function ErrandsPage() {
         }
 
         dispatch(
-            getErrands({ idUser: getIdLocalStorage(), filters: { title: search, filed: false } }),
+            getErrands({ idUser: getIdLocalStorage(), filters: { title: search, filed: true } }),
         );
         setActiveSearch(true);
     };
@@ -124,7 +119,7 @@ function ErrandsPage() {
         <Grid container spacing={2} width="calc(100vw - 80px)" display="flex">
             <Grid item xs={12}>
                 <Typography variant="h3" color="initial">
-                    Meus recados
+                    Arquivados
                 </Typography>
             </Grid>
 
@@ -174,17 +169,17 @@ function ErrandsPage() {
                 </Grid>
             )}
 
-            {dataOfErrands.filter((e) => e.filed === false).length === 0 && !activeSearch && (
+            {dataOfErrands.filter((e) => e.filed === true).length === 0 && !activeSearch && (
                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Typography variant="body1" color="#707070" sx={{ fontStyle: 'italic' }}>
-                        Você ainda não possui recados...
+                        Você não possui recados arquivados...
                     </Typography>
                 </Grid>
             )}
 
             {dataOfErrands &&
                 dataOfErrands.map((e) => {
-                    if (e.filed === false) {
+                    if (e.filed === true) {
                         return (
                             <MyCard
                                 key={e.id}
@@ -193,8 +188,8 @@ function ErrandsPage() {
                                 date={e.date}
                                 onClickEdit={() => handleModalUpdate(e.id)}
                                 onClickDelet={() => handleModalDelete(e.id)}
-                                modeArchive={false}
-                                onClickArchive={() => handleArchive(e.id, e.filed)}
+                                modeArchive
+                                onClickArchive={() => handleUnArchive(e.id, e.filed)}
                                 isChecked={e.check}
                                 onClickCheck={() => handleCheck(e.id, e.check)}
                             />
@@ -203,13 +198,12 @@ function ErrandsPage() {
                     return true;
                 })}
 
-            <MyModal idErrand={idErrand} open={openModal} handleClose={handleModal} />
+            <MyModal idErrand={idErrand} open={openModal} handleClose={() => setOpenModal(false)} />
             <MyModalConfirm
                 idErrand={idErrand}
                 open={openModalConfirm}
                 handleClose={() => handleModalDelete('')}
             />
-            <ButtonFloating onClick={handleModal} />
             <Spinner />
             <MyAlert
                 open={openAlert}
@@ -221,4 +215,4 @@ function ErrandsPage() {
     );
 }
 
-export default ErrandsPage;
+export default FiledPage;

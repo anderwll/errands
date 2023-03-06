@@ -4,9 +4,9 @@ import { ResponseAPI } from '../store/modules/typeStore';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-const apiGet = async (rota: string): Promise<ResponseAPI> => {
+const apiGet = async (rota: string, params?: any): Promise<ResponseAPI> => {
     try {
-        const response: AxiosResponse = await axios.get(rota);
+        const response: AxiosResponse = await axios.get(rota, { params });
 
         const responseAPI: ResponseAPI = {
             success: response.data.success,
