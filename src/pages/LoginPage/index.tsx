@@ -1,7 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
 
-import Footer from '../../components/Footer';
 import Login from '../../components/LoginSignup/Login';
 import MyPaper from '../../components/LoginSignup/MyPaper';
 import Spinner from '../../components/Spinner';
@@ -25,7 +24,6 @@ function LoginPage() {
                 <MyPaper elevation={12}>
                     <Login />
                 </MyPaper>
-                <Footer />
             </Grid>
             <Spinner />
         </Grid>

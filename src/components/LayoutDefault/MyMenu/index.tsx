@@ -7,8 +7,8 @@ const StyledMenu = styled((props: MenuProps) => (
     <Menu
         elevation={13}
         anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
+            vertical: 'top',
+            horizontal: 'left',
         }}
         transformOrigin={{
             vertical: 'top',

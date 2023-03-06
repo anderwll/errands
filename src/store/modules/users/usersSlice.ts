@@ -91,7 +91,10 @@ const usersSlice = createSlice({
         });
         builder.addCase(attUser.fulfilled, (state, action: PayloadAction<ResponseAPI>) => {
             if (action.payload.success) {
-                usersAdapter.updateOne(state, action.payload.data);
+                usersAdapter.updateOne(state, {
+                    id: action.payload.data.id,
+                    changes: action.payload.data,
+                });
             }
             state.loading = false;
             state.success = action.payload.success;
