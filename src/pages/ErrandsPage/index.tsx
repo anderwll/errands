@@ -1,7 +1,6 @@
 import { Search, Close } from '@mui/icons-material';
 import { Typography, Grid, Button, ButtonGroup, InputAdornment, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import MyAlert, { TypeAlert } from '../../components/Alert';
 import ButtonFloating from '../../components/Errrand/ButtonFloating';
@@ -27,7 +26,6 @@ function ErrandsPage() {
     const responseOfErrands = useAppSelector((state) => state.errands);
     const dataOfErrands = useAppSelector(handleErrands);
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
     const getIdLocalStorage = () => {
         return JSON.parse(localStorage.getItem('idUserLogged') || '');
@@ -38,12 +36,6 @@ function ErrandsPage() {
         setTypeAlert(type);
         setOpenAlert(!openAlert);
     };
-
-    useEffect(() => {
-        if (!getIdLocalStorage()) {
-            navigate('/');
-        }
-    }, [navigate]);
 
     useEffect(() => {
         if (!search) {

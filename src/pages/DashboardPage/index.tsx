@@ -4,7 +4,7 @@ import React from 'react';
 
 function DashboardPage() {
     return (
-        <Grid container>
+        <Grid item>
             <Grid item xs={12}>
                 <Typography variant="h3" color="initial">
                     Dashboard

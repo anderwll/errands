@@ -23,8 +23,10 @@ import {
     Toolbar,
 } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import MyMenu from '../../components/LayoutDefault/MyMenu';
 
 interface LayoutDefaultProps {
     component: JSX.Element;
@@ -116,11 +118,32 @@ const listItem = [
 ];
 
 function LayoutDefault({ component }: LayoutDefaultProps) {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const openMenu = Boolean(anchorEl);
+
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
+    const getIdLocalStorage = () => {
+        return JSON.parse(localStorage.getItem('idUserLogged') || '');
+    };
+
+    useEffect(() => {
+        if (!getIdLocalStorage()) {
+            navigate('/');
+        }
+    }, [navigate]);
+
     const handleDrawer = () => {
         setOpen(!open);
+    };
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     return (
@@ -138,7 +161,13 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
                         >
                             <Menu />
                         </IconButton>
-                        <IconButton size="large" edge="end" color="inherit" aria-label="menu">
+                        <IconButton
+                            size="large"
+                            edge="end"
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={handleClick}
+                        >
                             <AccountCircle sx={{ fontSize: 32 }} />
                         </IconButton>
                     </Toolbar>
@@ -182,9 +211,11 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
                     </List>
                 </MyDrawer>
             </Box>
-            <Grid item sx={{ m: '60px 0 0 60px', p: 2 }} onClick={() => setOpen(false)}>
+            <Grid item sx={{ m: '70px 0 0 60px', p: 2 }} onClick={() => setOpen(false)}>
                 {component}
             </Grid>
+
+            <MyMenu open={openMenu} anchorEl={anchorEl} handleClose={handleClose} />
         </Grid>
     );
 }
