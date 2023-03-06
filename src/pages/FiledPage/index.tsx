@@ -37,6 +37,10 @@ function FiledPage() {
     };
 
     useEffect(() => {
+        document.title = 'Arquivados | RecadosApp';
+    }, []);
+
+    useEffect(() => {
         if (!activeSearch) {
             dispatch(getErrands({ idUser: getIdLocalStorage(), filters: { filed: true } }));
         }

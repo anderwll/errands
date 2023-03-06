@@ -1,8 +1,12 @@
 import { Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function DashboardPage() {
+    useEffect(() => {
+        document.title = 'Dashboard | RecadosApp';
+    }, []);
+
     return (
         <Grid item>
             <Grid item xs={12}>

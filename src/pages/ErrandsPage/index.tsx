@@ -38,6 +38,10 @@ function ErrandsPage() {
     };
 
     useEffect(() => {
+        document.title = 'Meus Recados | RecadosApp';
+    }, []);
+
+    useEffect(() => {
         if (!activeSearch) {
             dispatch(getErrands({ idUser: getIdLocalStorage(), filters: { filed: false } }));
         }

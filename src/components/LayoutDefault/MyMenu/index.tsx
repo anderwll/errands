@@ -78,7 +78,7 @@ function MyMenu({ anchorEl, open, handleClose }: MyMenuProps) {
             </MenuItem>
             <MenuItem disableRipple onClick={handleClose}>
                 <Brightness4 />
-                DarkMode
+                Modo Escuro
             </MenuItem>
             <Divider sx={{ m: 0.5 }} />
             <MenuItem disableRipple onClick={handleLogout}>

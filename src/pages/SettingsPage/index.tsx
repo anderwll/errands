@@ -1,7 +1,11 @@
 import { Grid, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function SettingsPage() {
+    useEffect(() => {
+        document.title = 'Configurações | RecadosApp';
+    }, []);
+
     return (
         <Grid item>
             <Grid item xs={12}>

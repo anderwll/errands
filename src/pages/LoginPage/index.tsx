@@ -1,11 +1,15 @@
 import { Grid, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Login from '../../components/LoginSignup/Login';
 import MyPaper from '../../components/LoginSignup/MyPaper';
 import Spinner from '../../components/Spinner';
 
 function LoginPage() {
+    useEffect(() => {
+        document.title = 'RecadosApp';
+    }, []);
+
     return (
         <Grid
             container
