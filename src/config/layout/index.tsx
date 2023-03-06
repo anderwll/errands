@@ -27,6 +27,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MyMenu from '../../components/LayoutDefault/MyMenu';
+import { useAppDispatch } from '../../store/hooks';
+import { getUserById } from '../../store/modules/userLogged/userLoggedSlice';
 
 interface LayoutDefaultProps {
     component: JSX.Element;
@@ -123,6 +125,7 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
 
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const getIdLocalStorage = () => {
         return JSON.parse(localStorage.getItem('idUserLogged') || '');
@@ -132,6 +135,8 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
         if (!getIdLocalStorage()) {
             navigate('/');
         }
+
+        dispatch(getUserById(getIdLocalStorage()));
     }, [navigate]);
 
     const handleDrawer = () => {

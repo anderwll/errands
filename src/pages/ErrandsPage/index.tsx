@@ -38,10 +38,10 @@ function ErrandsPage() {
     };
 
     useEffect(() => {
-        if (!search) {
-            dispatch(getErrands({ idUser: getIdLocalStorage() }));
+        if (!activeSearch) {
+            dispatch(getErrands({ idUser: getIdLocalStorage(), filters: { filed: false } }));
         }
-    }, [dispatch, search]);
+    }, [dispatch, activeSearch]);
 
     useEffect(() => {
         if (

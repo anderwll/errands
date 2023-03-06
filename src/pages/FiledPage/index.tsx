@@ -38,7 +38,7 @@ function FiledPage() {
 
     useEffect(() => {
         if (!activeSearch) {
-            dispatch(getErrands({ idUser: getIdLocalStorage() }));
+            dispatch(getErrands({ idUser: getIdLocalStorage(), filters: { filed: true } }));
         }
     }, [dispatch, activeSearch]);
 
