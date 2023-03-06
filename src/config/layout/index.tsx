@@ -7,6 +7,7 @@ import {
     Archive,
 } from '@mui/icons-material';
 import {
+    Avatar,
     Box,
     CSSObject,
     Divider,
@@ -27,7 +28,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MyMenu from '../../components/LayoutDefault/MyMenu';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getUserById } from '../../store/modules/userLogged/userLoggedSlice';
 
 interface LayoutDefaultProps {
@@ -124,6 +125,7 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
     const openMenu = Boolean(anchorEl);
 
     const [open, setOpen] = useState(false);
+    const name = useAppSelector((state) => state.userLogged.data?.name);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -173,7 +175,11 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
                             aria-label="menu"
                             onClick={handleClick}
                         >
-                            <AccountCircle sx={{ fontSize: 32 }} />
+                            {!name ? (
+                                <AccountCircle sx={{ fontSize: 32 }} />
+                            ) : (
+                                <Avatar>{name && `${name[0]}${name[1]}`}</Avatar>
+                            )}
                         </IconButton>
                     </Toolbar>
                 </AppBar>
