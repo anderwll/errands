@@ -60,7 +60,6 @@ function MyCard({
                     display: 'flex',
                     flexDirection: 'column',
                     p: 1,
-                    background: '#fff',
                     position: 'relative',
                 }}
             >

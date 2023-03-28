@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 
 import Login from '../../components/LoginSignup/Login';
@@ -15,16 +15,17 @@ function LoginPage() {
             container
             spacing={0}
             width="100vw"
-            height="calc(100vh - 40px)"
+            height="100vh"
             display="flex"
             justifyContent="center"
             alignItems="center"
             textAlign="center"
+            sx={{
+                background:
+                    'linear-gradient(45deg, rgba(166,209,236,1) 0%, rgba(129,152,214,1) 32%, rgba(220,49,222,1) 100%)',
+            }}
         >
             <Grid item>
-                <Typography variant="h6" color="initial">
-                    Seja bem-vindo
-                </Typography>
                 <MyPaper elevation={12}>
                     <Login />
                 </MyPaper>

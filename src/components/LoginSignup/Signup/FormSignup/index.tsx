@@ -200,7 +200,12 @@ function FormSignup() {
                     fullWidth
                     variant="contained"
                     color="secondary"
-                    sx={{ p: 1.1, borderRadius: 5 }}
+                    sx={{
+                        p: 1.1,
+                        borderRadius: 5,
+                        background:
+                            'linear-gradient(45deg, rgba(166,209,236,1) 0%, rgba(129,152,214,1) 32%, rgba(220,49,222,1) 100%)',
+                    }}
                     onClick={handleSignup}
                 >
                     Cadastrar
