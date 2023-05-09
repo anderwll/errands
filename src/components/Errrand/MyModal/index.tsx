@@ -1,4 +1,4 @@
-import { Description, Title, Check, Close } from '@mui/icons-material';
+import { Check, Close } from '@mui/icons-material';
 import { Modal, Typography, Box, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
@@ -162,7 +162,6 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                 </Box>
                 <Box>
                     <MyTextFieldErrand
-                        icon={<Title sx={{ fontSize: 18 }} />}
                         type="text"
                         label="Titulo"
                         value={title}
@@ -170,7 +169,6 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                         sx={{ padding: '2px 0', mb: '15px' }}
                     />
                     <MyTextFieldErrand
-                        icon={<Description sx={{ fontSize: 18 }} />}
                         type="text"
                         label="Descrição"
                         multiline

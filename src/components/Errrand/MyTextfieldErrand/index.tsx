@@ -2,7 +2,7 @@ import { InputAdornment, TextField } from '@mui/material';
 import React from 'react';
 
 interface MyTextFieldErrandProps {
-    icon: any;
+    icon?: any;
     label?: string;
     type: React.HTMLInputTypeAttribute | undefined;
     value: string;

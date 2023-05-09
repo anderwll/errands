@@ -21,6 +21,7 @@ function ErrandsPage() {
     const [infoAlert, setInfoAlert] = useState('');
 
     const [search, setSearch] = useState('');
+    const [searchResult, setSearchResult] = useState('');
     const [activeSearch, setActiveSearch] = useState(false);
 
     const responseOfErrands = useAppSelector((state) => state.errands);
@@ -109,11 +110,13 @@ function ErrandsPage() {
             getErrands({ idUser: getIdLocalStorage(), filters: { title: search, filed: false } }),
         );
         setActiveSearch(true);
+        setSearchResult(search);
     };
 
     const handleCloseSearch = () => {
         setActiveSearch(false);
         setSearch('');
+        setSearchResult('');
     };
 
     return (
@@ -124,12 +127,12 @@ function ErrandsPage() {
                 </Typography>
             </Grid>
 
-            <Grid item xs={12}>
-                <ButtonGroup disableElevation variant="contained" sx={{ gap: 1, width: '100%' }}>
+            <Grid item xs={12} display="flex" justifyContent="end">
+                <ButtonGroup disableElevation variant="contained" sx={{ gap: 1, width: '384px' }}>
                     <TextField
                         fullWidth
                         color="primary"
-                        variant="standard"
+                        variant="outlined"
                         placeholder="Pesquise pelo título..."
                         type="text"
                         InputProps={{
@@ -140,7 +143,6 @@ function ErrandsPage() {
                                     onClick={handleSearch}
                                 >
                                     <Search sx={{ mr: 1 }} />
-                                    Pesquisar
                                 </InputAdornment>
                             ),
                         }}
@@ -154,7 +156,7 @@ function ErrandsPage() {
             {activeSearch && (
                 <Grid item xs={12} display="flex" justifyContent="space-between">
                     <Typography variant="h6" color="initial">
-                        Resultado para... `{search}`
+                        Resultado(s) para... `{searchResult}`
                     </Typography>
                     <Button variant="text" color="inherit" onClick={handleCloseSearch}>
                         <Close sx={{ fontSize: 25 }} />
