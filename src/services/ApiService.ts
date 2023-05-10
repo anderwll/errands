@@ -55,7 +55,7 @@ const apiPut = async (rota: string, dados: any): Promise<ResponseAPI> => {
         const responseAPI: ResponseAPI = {
             success: response.data.success,
             message: response.data.message,
-            data: response.data.data,
+            data: response.data,
         };
 
         return responseAPI;

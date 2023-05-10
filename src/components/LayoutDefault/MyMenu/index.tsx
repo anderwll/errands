@@ -1,7 +1,9 @@
 import { ManageAccounts, Brightness4, Logout } from '@mui/icons-material';
 import { alpha, Divider, Menu, MenuItem, MenuProps, styled } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { ThemeContext } from '../../../App';
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -51,6 +53,8 @@ interface MyMenuProps {
 
 function MyMenu({ anchorEl, open, handleClose }: MyMenuProps) {
     const navigate = useNavigate();
+    // const dispatch = useAppDispatch();
+    const { toggleDarkMode } = useContext(ThemeContext);
 
     const handleAccount = () => {
         navigate('/configuracoes');
@@ -60,6 +64,11 @@ function MyMenu({ anchorEl, open, handleClose }: MyMenuProps) {
     const handleLogout = () => {
         localStorage.setItem('idUserLogged', JSON.stringify(''));
         navigate('/');
+    };
+
+    const handleDarkMode = () => {
+        toggleDarkMode();
+        handleClose();
     };
 
     return (
@@ -76,7 +85,7 @@ function MyMenu({ anchorEl, open, handleClose }: MyMenuProps) {
                 <ManageAccounts />
                 Conta
             </MenuItem>
-            <MenuItem disableRipple onClick={handleClose}>
+            <MenuItem disableRipple onClick={handleDarkMode}>
                 <Brightness4 />
                 Modo Escuro
             </MenuItem>

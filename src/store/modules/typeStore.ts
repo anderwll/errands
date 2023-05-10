@@ -6,10 +6,10 @@ export interface ResponseAPI {
 
 export interface User {
     id: string;
-    name: string;
-    email: string;
-    password: string;
-    darkMode: boolean;
+    name?: string;
+    email?: string;
+    password?: string;
+    darkMode?: boolean;
     errands: Array<Errand>;
 }
 
