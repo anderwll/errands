@@ -13,6 +13,8 @@ const MyPaper = styled(Paper)(() => ({
     gap: '20px',
     borderRadius: 12,
     zIndex: 9999,
+    background: '#ffff',
+    color: 'black',
 }));
 
 export default MyPaper;

@@ -49,10 +49,10 @@ function MyModalConfirm({ idErrand, open, handleClose }: MyModalConfirmProps) {
             <Box sx={style}>
                 <Box sx={{ mb: 2 }}>
                     <Typography variant="h4">Apagar Recado</Typography>
-                    <Typography variant="subtitle1" color="inherit" sx={{ marginTop: '20px' }}>
+                    <Typography variant="subtitle1" sx={{ marginTop: '20px' }}>
                         Tem certeza que deseja excluir permanentemente esse recado?
                     </Typography>
-                    <Typography variant="subtitle1" color="inherit" sx={{ marginTop: '20px' }}>
+                    <Typography variant="subtitle1" sx={{ marginTop: '20px' }}>
                         Ao confirmar, não podera mais ser desfeito.
                     </Typography>
                 </Box>

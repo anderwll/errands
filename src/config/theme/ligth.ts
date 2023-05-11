@@ -4,19 +4,19 @@ import { blue, purple } from '@mui/material/colors';
 export const LightTheme = createTheme({
     palette: {
         primary: {
-            main: blue[700],
-            dark: blue[800],
+            main: blue[500],
+            dark: blue[500],
             light: blue[500],
             contrastText: '#FFFFFF',
         },
         secondary: {
             main: purple[500],
-            dark: purple[400],
-            light: purple[300],
+            dark: purple[500],
+            light: purple[500],
             contrastText: '#FFFFFF',
         },
         background: {
-            default: '#f6abb8',
+            default: '#D3D3D3',
             paper: '#ffff',
         },
     },

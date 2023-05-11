@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../App';
+import { clearUserLogged } from '../../../store/modules/userLogged/userLoggedSlice';
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -53,8 +54,7 @@ interface MyMenuProps {
 
 function MyMenu({ anchorEl, open, handleClose }: MyMenuProps) {
     const navigate = useNavigate();
-    // const dispatch = useAppDispatch();
-    const { toggleDarkMode } = useContext(ThemeContext);
+    const { darkMode, toggleDarkMode } = useContext(ThemeContext);
 
     const handleAccount = () => {
         navigate('/configuracoes');
@@ -63,6 +63,7 @@ function MyMenu({ anchorEl, open, handleClose }: MyMenuProps) {
 
     const handleLogout = () => {
         localStorage.setItem('idUserLogged', JSON.stringify(''));
+        clearUserLogged();
         navigate('/');
     };
 
@@ -87,7 +88,7 @@ function MyMenu({ anchorEl, open, handleClose }: MyMenuProps) {
             </MenuItem>
             <MenuItem disableRipple onClick={handleDarkMode}>
                 <Brightness4 />
-                Modo Escuro
+                {darkMode ? 'Modo Claro' : 'Modo Escuro'}
             </MenuItem>
             <Divider sx={{ m: 0.5 }} />
             <MenuItem disableRipple onClick={handleLogout}>

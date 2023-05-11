@@ -22,14 +22,14 @@ import {
     styled,
     Theme,
     Toolbar,
+    useTheme,
 } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MyMenu from '../../components/LayoutDefault/MyMenu';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getUserById } from '../../store/modules/userLogged/userLoggedSlice';
+import { useAppSelector } from '../../store/hooks';
 
 interface LayoutDefaultProps {
     component: JSX.Element;
@@ -127,7 +127,7 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
     const [open, setOpen] = useState(false);
     const name = useAppSelector((state) => state.userLogged.data?.name);
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+    const theme = useTheme();
 
     const getIdLocalStorage = () => {
         return JSON.parse(localStorage.getItem('idUserLogged') || '');
@@ -137,8 +137,6 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
         if (!getIdLocalStorage()) {
             navigate('/');
         }
-
-        dispatch(getUserById(getIdLocalStorage()));
     }, [navigate]);
 
     const handleDrawer = () => {
@@ -156,7 +154,7 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
     return (
         <Grid container display="flex" flexDirection="column" width="100vw">
             <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="fixed" sx={{ background: '#3a3a3a' }}>
+                <AppBar position="fixed" sx={{ background: '#535353' }}>
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <IconButton
                             size="large"
@@ -222,8 +220,25 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
                     </List>
                 </MyDrawer>
             </Box>
-            <Grid item sx={{ m: '70px 0 0 60px', p: 2 }} onClick={() => setOpen(false)}>
-                {component}
+            <Grid
+                item
+                sx={{
+                    height: 'calc(100vh - 60px)',
+                    m: '60px 0 0 60px',
+                    p: 2,
+                    background: theme.palette.background.default,
+                }}
+                onClick={() => setOpen(false)}
+            >
+                <Grid
+                    item
+                    sx={{
+                        height: '100%',
+                        background: theme.palette.background.default,
+                    }}
+                >
+                    {component}
+                </Grid>
             </Grid>
 
             <MyMenu open={openMenu} anchorEl={anchorEl} handleClose={handleClose} />

@@ -22,7 +22,11 @@ export const getUserById = createAsyncThunk<ResponseAPI, string>(
 const userLoggedSlice = createSlice({
     name: 'userLogged',
     initialState,
-    reducers: {},
+    reducers: {
+        clearUserLogged() {
+            return initialState;
+        },
+    },
     extraReducers: (builder) => {
         // GET USER BY ID
         builder.addCase(getUserById.pending, (state) => {
@@ -38,3 +42,4 @@ const userLoggedSlice = createSlice({
 });
 
 export const userLoggedReducer = userLoggedSlice.reducer;
+export const { clearUserLogged } = userLoggedSlice.actions;

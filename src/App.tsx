@@ -13,16 +13,13 @@ export const ThemeContext = React.createContext({
 });
 
 function App() {
+    const dispatch = useAppDispatch();
+    const userDarkMode = useAppSelector((state) => state.userLogged.data?.darkMode) as boolean;
+    const [darkMode, setDarkMode] = useState(userDarkMode);
+
     const getIdLocalStorage = () => {
         return JSON.parse(localStorage.getItem('idUserLogged') || '');
     };
-
-    const dispatch = useAppDispatch();
-    const userOfLoading = useAppSelector((state) => state.users.loading);
-    const userLoggedDarkMode = useAppSelector(
-        (state) => state.userLogged.data?.darkMode,
-    ) as boolean;
-    const [darkMode, setDarkMode] = useState(userLoggedDarkMode);
 
     const toggleDarkMode = () => {
         dispatch(attUser({ id: getIdLocalStorage(), darkMode: !darkMode }));
@@ -30,19 +27,12 @@ function App() {
     };
 
     useEffect(() => {
-        if (!userOfLoading) {
-            dispatch(getUserById(getIdLocalStorage()));
-        }
+        dispatch(getUserById(getIdLocalStorage()));
     }, []);
 
-    let teste = 0;
-
     useEffect(() => {
-        if (teste <= 0) {
-            setDarkMode(userLoggedDarkMode);
-            teste += 1;
-        }
-    }, [userLoggedDarkMode]);
+        setDarkMode(userDarkMode);
+    }, [dispatch, userDarkMode]);
 
     const theme = darkMode ? DarkTheme : LightTheme;
 

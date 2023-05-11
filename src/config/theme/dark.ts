@@ -5,20 +5,20 @@ export const DarkTheme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: blue[400],
-            dark: blue[400],
-            light: blue[500],
+            main: blue[900],
+            dark: blue[900],
+            light: blue[900],
             contrastText: '#FFFFFF',
         },
         secondary: {
-            main: purple[500],
-            dark: purple[400],
-            light: purple[300],
+            main: purple[900],
+            dark: purple[900],
+            light: purple[900],
             contrastText: '#FFFFFF',
         },
         background: {
-            default: '#202124',
-            paper: '#303134',
+            default: '#303134',
+            paper: '#4b4c4f',
         },
     },
     typography: {

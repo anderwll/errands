@@ -117,9 +117,7 @@ function FiledPage() {
     return (
         <Grid container spacing={2} width="calc(100vw - 80px)" display="flex">
             <Grid item xs={12}>
-                <Typography variant="h3" color="initial">
-                    Arquivados
-                </Typography>
+                <Typography variant="h3">Arquivados</Typography>
             </Grid>
 
             <Grid item xs={12} display="flex" justifyContent="end">
@@ -150,9 +148,7 @@ function FiledPage() {
 
             {activeSearch && (
                 <Grid item xs={12} display="flex" justifyContent="space-between">
-                    <Typography variant="h6" color="initial">
-                        Resultado(s) para... `{searchResult}`
-                    </Typography>
+                    <Typography variant="h6">Resultado(s) para: ` {searchResult} `</Typography>
                     <Button variant="text" color="inherit" onClick={handleCloseSearch}>
                         <Close sx={{ fontSize: 25 }} />
                     </Button>

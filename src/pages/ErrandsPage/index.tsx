@@ -26,6 +26,7 @@ function ErrandsPage() {
 
     const responseOfErrands = useAppSelector((state) => state.errands);
     const dataOfErrands = useAppSelector(handleErrands);
+
     const dispatch = useAppDispatch();
 
     const getIdLocalStorage = () => {
@@ -122,9 +123,7 @@ function ErrandsPage() {
     return (
         <Grid container spacing={2} width="calc(100vw - 80px)" display="flex">
             <Grid item xs={12}>
-                <Typography variant="h3" color="initial">
-                    Meus recados
-                </Typography>
+                <Typography variant="h3">Meus recados</Typography>
             </Grid>
 
             <Grid item xs={12} display="flex" justifyContent="end">
@@ -155,9 +154,7 @@ function ErrandsPage() {
 
             {activeSearch && (
                 <Grid item xs={12} display="flex" justifyContent="space-between">
-                    <Typography variant="h6" color="initial">
-                        Resultado(s) para... `{searchResult}`
-                    </Typography>
+                    <Typography variant="h6">Resultado(s) para: ` {searchResult} `</Typography>
                     <Button variant="text" color="inherit" onClick={handleCloseSearch}>
                         <Close sx={{ fontSize: 25 }} />
                     </Button>

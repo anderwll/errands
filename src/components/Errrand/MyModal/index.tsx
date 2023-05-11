@@ -154,7 +154,7 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                     <Typography variant="h4">{!id ? 'Novo Recado' : 'Editar Recado'}</Typography>
                     <Typography
                         variant="subtitle2"
-                        color={error ? 'orange' : 'inherit'}
+                        color={error ? 'orange' : ''}
                         sx={{ marginTop: '15px' }}
                     >
                         {info}
