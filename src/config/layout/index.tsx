@@ -224,8 +224,8 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
                 item
                 sx={{
                     height: 'calc(100vh - 60px)',
-                    m: '60px 0 0 60px',
-                    p: 2,
+                    m: '60px 0 0 55px',
+                    p: 3,
                     background: theme.palette.background.default,
                 }}
                 onClick={() => setOpen(false)}

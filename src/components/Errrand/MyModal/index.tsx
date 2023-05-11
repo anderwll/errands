@@ -1,5 +1,5 @@
 import { Check, Close } from '@mui/icons-material';
-import { Modal, Typography, Box, Button } from '@mui/material';
+import { Modal, Typography, Box, Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -9,7 +9,6 @@ import {
     saveErrand,
 } from '../../../store/modules/errands/errandsSlice';
 import { Errand } from '../../../store/modules/typeStore';
-import MyTextFieldErrand from '../MyTextfieldErrand';
 
 const style = {
     position: 'absolute' as const,
@@ -48,6 +47,10 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
     const getIdLocalStorage = () => {
         return JSON.parse(localStorage.getItem('idUserLogged') || '');
     };
+
+    useEffect(() => {
+        setError(false);
+    }, [open]);
 
     useEffect(() => {
         if (idErrand) {
@@ -161,14 +164,16 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                     </Typography>
                 </Box>
                 <Box>
-                    <MyTextFieldErrand
+                    <TextField
+                        fullWidth
                         type="text"
                         label="Titulo"
                         value={title}
                         onChange={(e) => handleChange(e.target.value, 'title')}
                         sx={{ padding: '2px 0', mb: '15px' }}
                     />
-                    <MyTextFieldErrand
+                    <TextField
+                        fullWidth
                         type="text"
                         label="Descrição"
                         multiline
