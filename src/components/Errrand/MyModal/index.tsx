@@ -1,4 +1,4 @@
-import { Check, Close } from '@mui/icons-material';
+import { Check } from '@mui/icons-material';
 import { Modal, Typography, Box, Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
@@ -193,21 +193,21 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                     }}
                 >
                     <Button
-                        variant="contained"
-                        color="secondary"
-                        sx={{ p: 1.2 }}
-                        onClick={!id ? handleCreate : handleUpdate}
+                        variant="text"
+                        color="inherit"
+                        sx={{ p: 1.1, textTransform: 'capitalize' }}
+                        onClick={handleClose}
                     >
-                        <Check sx={{ mr: 1 }} />
-                        Salvar
+                        Cancelar
                     </Button>
                     <Button
                         variant="contained"
-                        color="primary"
-                        sx={{ p: 1.2 }}
-                        onClick={handleClose}
+                        color="secondary"
+                        sx={{ p: 1.2, textTransform: 'capitalize' }}
+                        onClick={!id ? handleCreate : handleUpdate}
                     >
-                        <Close />
+                        Salvar
+                        <Check sx={{ ml: 0.8 }} />
                     </Button>
                 </Box>
             </Box>

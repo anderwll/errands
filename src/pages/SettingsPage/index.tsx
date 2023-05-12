@@ -1,20 +1,242 @@
-import { Grid, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Button, Grid, TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 function SettingsPage() {
+    const userLogged = useAppSelector((state) => state.userLogged.data);
+
+    const [info, setInfo] = useState('');
+    const [errorName, setErrorName] = useState(false);
+    const [errorPassword, setErrorPassword] = useState(false);
+    const [errorRePassword, setErrorRePassword] = useState(false);
+
+    const [disabledName, setDisabledName] = useState(true);
+    const [disabledPassword, setDisabledPassword] = useState(true);
+
+    const [name, setName] = useState<string | undefined>('');
+    const [email, setEmail] = useState<string | undefined>('');
+    const [password, setPassword] = useState<string | undefined>('');
+    const [rePassword, setRePassword] = useState<string | undefined>('');
+
+    // const dispatch = useAppDispatch();
+
     useEffect(() => {
         document.title = 'Configurações | RecadosApp';
     }, []);
+
+    useEffect(() => {
+        if (userLogged) {
+            setName(userLogged.name);
+            setEmail(userLogged.email);
+            setPassword(userLogged.password);
+            setRePassword(userLogged.password);
+        }
+    }, [userLogged, disabledName, disabledPassword]);
+
+    useEffect(() => {
+        setErrorName(false);
+        setErrorPassword(false);
+        setErrorRePassword(false);
+    }, [disabledName, disabledPassword]);
+
+    const handleValidator = (value: string, type: string) => {
+        switch (type) {
+            case 'name':
+                if (value.length < 3) {
+                    setInfo('Nome deve conter no mínimo 3 caracteres.');
+                    setErrorName(true);
+                } else {
+                    setInfo('');
+                    setErrorName(false);
+                }
+                break;
+
+            case 'password':
+                const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
+                if (!value.match(regexPassword)) {
+                    setInfo('Senha deve conter no mínimo seis caracteres, uma letra e um número.');
+                    setErrorPassword(true);
+                } else {
+                    setInfo('');
+                    setErrorPassword(false);
+                }
+                break;
+
+            case 'rePassword':
+                if (!value || value !== password) {
+                    setInfo('Senhas não condizem.');
+                    setErrorRePassword(true);
+                } else {
+                    setInfo('');
+                    setErrorRePassword(false);
+                }
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    const handleChange = (value: string, type: string) => {
+        switch (type) {
+            case 'name':
+                setName(value);
+                handleValidator(value, type);
+                break;
+
+            case 'password':
+                setPassword(value);
+                handleValidator(value, type);
+                break;
+
+            case 'rePassword':
+                setRePassword(value);
+                handleValidator(value, type);
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    const handleDisabled = (type: string, value: boolean) => {
+        switch (type) {
+            case 'name':
+                setDisabledName(value);
+                break;
+
+            case 'password':
+                setDisabledPassword(value);
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    const handleUpdate = () => {
+        alert('salvando edição');
+        setDisabledName(true);
+        setDisabledPassword(true);
+    };
 
     return (
         <Grid item>
             <Grid item xs={12}>
                 <Typography variant="h3">Configurações</Typography>
             </Grid>
-            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Typography variant="body1" color="#707070" sx={{ fontStyle: 'italic' }}>
-                    Essa página está em produção... disponível na v2.0
-                </Typography>
+
+            <Grid item display="flex" flexDirection="column" alignItems="center">
+                <Grid item mb={3} mt={2}>
+                    <Typography variant="h5" color="#707070" sx={{ fontStyle: 'italic' }}>
+                        Minha conta
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} sm={9} md={6}>
+                    {/* --------------------------- NOME -------------------------------------- */}
+                    <TextField
+                        fullWidth
+                        disabled={disabledName}
+                        type="text"
+                        label="Nome"
+                        value={name}
+                        onChange={(e) => handleChange(e.target.value, 'name')}
+                        sx={{ padding: '2px 0' }}
+                    />
+                    {errorName && (
+                        <Typography variant="caption" color="orange">
+                            {info}
+                        </Typography>
+                    )}
+                    <Grid item mb={2} display="flex" justifyContent="end" mt={0.5}>
+                        {!disabledName && (
+                            <Button
+                                variant="text"
+                                color="inherit"
+                                sx={{ p: 1, textTransform: 'capitalize', mr: 1 }}
+                                onClick={() => handleDisabled('name', true)}
+                            >
+                                Cancelar
+                            </Button>
+                        )}
+                        <Button
+                            variant={disabledName ? 'outlined' : 'contained'}
+                            color={disabledName ? 'primary' : 'secondary'}
+                            sx={{ p: 1, textTransform: 'capitalize' }}
+                            onClick={
+                                disabledName ? () => handleDisabled('name', false) : handleUpdate
+                            }
+                        >
+                            {disabledName ? 'Editar' : 'Salvar'}
+                        </Button>
+                    </Grid>
+
+                    {/* --------------------------- EMAIL -------------------------------------- */}
+                    <TextField
+                        fullWidth
+                        disabled
+                        type="email"
+                        label="E-mail"
+                        value={email}
+                        sx={{ padding: '2px 0', mb: 2 }}
+                    />
+
+                    {/* --------------------------- SENHA -------------------------------------- */}
+                    <TextField
+                        fullWidth
+                        disabled={disabledPassword}
+                        type="password"
+                        label="Senha"
+                        value={password}
+                        onChange={(e) => handleChange(e.target.value, 'password')}
+                        sx={{ padding: '2px 0' }}
+                    />
+                    {errorPassword && (
+                        <Typography variant="caption" color="orange">
+                            {info}
+                        </Typography>
+                    )}
+                    <TextField
+                        fullWidth
+                        disabled={disabledPassword}
+                        type="password"
+                        label="Repetir senha"
+                        value={rePassword}
+                        onChange={(e) => handleChange(e.target.value, 'rePassword')}
+                        sx={{ padding: '2px 0', mt: 2 }}
+                    />
+                    {errorRePassword && (
+                        <Typography variant="caption" color="orange">
+                            {info}
+                        </Typography>
+                    )}
+                    <Grid item mb={2} display="flex" justifyContent="end" mt={0.5}>
+                        {!disabledPassword && (
+                            <Button
+                                variant="text"
+                                color="inherit"
+                                sx={{ p: 1, textTransform: 'capitalize', mr: 1 }}
+                                onClick={() => handleDisabled('password', true)}
+                            >
+                                Cancelar
+                            </Button>
+                        )}
+                        <Button
+                            variant={disabledPassword ? 'outlined' : 'contained'}
+                            color={disabledPassword ? 'primary' : 'secondary'}
+                            sx={{ p: 1, textTransform: 'capitalize' }}
+                            onClick={
+                                disabledPassword
+                                    ? () => handleDisabled('password', false)
+                                    : handleUpdate
+                            }
+                        >
+                            {disabledPassword ? 'Editar' : 'Salvar'}
+                        </Button>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     );
