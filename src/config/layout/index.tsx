@@ -223,7 +223,7 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
             <Grid
                 item
                 sx={{
-                    height: 'calc(100vh - 60px)',
+                    height: '100%',
                     m: '60px 0 0 55px',
                     p: 3,
                     background: theme.palette.background.default,
@@ -233,7 +233,7 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
                 <Grid
                     item
                     sx={{
-                        height: '100%',
+                        height: 'calc(100vh - 60px)',
                         background: theme.palette.background.default,
                     }}
                 >

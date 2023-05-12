@@ -56,7 +56,7 @@ function SettingsPage() {
                 const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
                 if (!value.match(regexPassword)) {
-                    setInfo('Senha deve conter no mínimo seis caracteres, uma letra e um número.');
+                    setInfo('Senha deve conter no mínimo seis caracteres.');
                     setErrorPassword(true);
                 } else {
                     setInfo('');

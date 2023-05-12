@@ -10,7 +10,6 @@ export interface User {
     email?: string;
     password?: string;
     darkMode?: boolean;
-    errands: Array<Errand>;
 }
 
 export interface Errand {
