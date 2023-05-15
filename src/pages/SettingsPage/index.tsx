@@ -1,6 +1,8 @@
+import { Check } from '@mui/icons-material';
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
+import MyTextFieldPasswordSettings from '../../components/Settings/MyTextFieldPasswordSettings';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 function SettingsPage() {
@@ -134,7 +136,7 @@ function SettingsPage() {
                         Minha conta
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sm={9} md={6}>
+                <Grid item xs={12} sm={9} md={4}>
                     {/* --------------------------- NOME -------------------------------------- */}
                     <TextField
                         fullWidth
@@ -170,6 +172,7 @@ function SettingsPage() {
                             }
                         >
                             {disabledName ? 'Editar' : 'Salvar'}
+                            {!disabledName && <Check sx={{ ml: 0.2 }} />}
                         </Button>
                     </Grid>
 
@@ -180,32 +183,27 @@ function SettingsPage() {
                         type="email"
                         label="E-mail"
                         value={email}
-                        sx={{ padding: '2px 0', mb: 2 }}
+                        sx={{ padding: '2px 0' }}
                     />
 
                     {/* --------------------------- SENHA -------------------------------------- */}
-                    <TextField
-                        fullWidth
-                        disabled={disabledPassword}
-                        type="password"
+                    <MyTextFieldPasswordSettings
                         label="Senha"
+                        disabled={disabledPassword}
                         value={password}
                         onChange={(e) => handleChange(e.target.value, 'password')}
-                        sx={{ padding: '2px 0' }}
                     />
                     {errorPassword && (
                         <Typography variant="caption" color="orange">
                             {info}
                         </Typography>
                     )}
-                    <TextField
-                        fullWidth
-                        disabled={disabledPassword}
-                        type="password"
+
+                    <MyTextFieldPasswordSettings
                         label="Repetir senha"
+                        disabled={disabledPassword}
                         value={rePassword}
                         onChange={(e) => handleChange(e.target.value, 'rePassword')}
-                        sx={{ padding: '2px 0', mt: 2 }}
                     />
                     {errorRePassword && (
                         <Typography variant="caption" color="orange">
@@ -234,6 +232,7 @@ function SettingsPage() {
                             }
                         >
                             {disabledPassword ? 'Editar' : 'Salvar'}
+                            {!disabledPassword && <Check sx={{ ml: 0.2 }} />}
                         </Button>
                     </Grid>
                 </Grid>
