@@ -76,13 +76,15 @@ function MyCard({
                         <MoreVert />
                     </Button>
                 </Box>
-                <CardContent sx={{ height: 240, overflowY: 'auto' }}>
+                <CardContent sx={{ height: 240 }}>
                     <Typography sx={{ fontSize: 20 }} color="inherit" gutterBottom>
                         {title}
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="inherit">
-                        {description}
-                    </Typography>
+                    <Box sx={{ height: 185, overflowY: 'auto' }}>
+                        <Typography sx={{ mb: 1.5 }} color="inherit">
+                            {description}
+                        </Typography>
+                    </Box>
                 </CardContent>
                 <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Checkbox

@@ -10,6 +10,7 @@ import MyModalConfirm from '../../components/Errrand/MyModalConfirm';
 import Spinner from '../../components/Spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { attErrand, getErrands, handleErrands } from '../../store/modules/errands/errandsSlice';
+import { User } from '../../store/modules/typeStore';
 
 function ErrandsPage() {
     const [openModal, setOpenModal] = useState(false);
@@ -24,14 +25,11 @@ function ErrandsPage() {
     const [searchResult, setSearchResult] = useState('');
     const [activeSearch, setActiveSearch] = useState(false);
 
+    const userLogged = useAppSelector((state) => state.userLogged.data) as User;
     const responseOfErrands = useAppSelector((state) => state.errands);
     const dataOfErrands = useAppSelector(handleErrands);
 
     const dispatch = useAppDispatch();
-
-    const getIdLocalStorage = () => {
-        return JSON.parse(localStorage.getItem('idUserLogged') || '');
-    };
 
     const handleAlert = (info: string, type: TypeAlert) => {
         setInfoAlert(info);
@@ -43,20 +41,34 @@ function ErrandsPage() {
         document.title = 'Meus Recados | RecadosApp';
     }, []);
 
+    // --- OBSERVA QUANDO PESQUISAR E RECARREGA PAG --- //
     useEffect(() => {
-        if (!activeSearch) {
-            dispatch(getErrands({ idUser: getIdLocalStorage(), filters: { filed: false } }));
+        if (!activeSearch && userLogged) {
+            dispatch(getErrands({ idUser: userLogged.id, filters: { filed: false } }));
         }
-    }, [dispatch, activeSearch]);
+    }, [activeSearch, userLogged]);
 
+    // --- OBSERVA QUANDO ATT RECADO --- //
+    useEffect(() => {
+        if (responseOfErrands.message === 'Recado atualizado com sucesso.') {
+            dispatch(getErrands({ idUser: userLogged.id, filters: { filed: false } }));
+        }
+    }, [responseOfErrands]);
+
+    // --- OBSERVA QUANDO A PARTE DE ALERTA --- //
     useEffect(() => {
         if (
             !responseOfErrands.loading &&
             responseOfErrands.success &&
-            responseOfErrands.message !== ''
+            responseOfErrands.message !== '' &&
+            responseOfErrands.message !== 'Recados buscado com sucesso.'
         ) {
             handleAlert(responseOfErrands.message, 'success');
-        } else if (!responseOfErrands.success && responseOfErrands.message !== '') {
+        } else if (
+            !responseOfErrands.success &&
+            responseOfErrands.message !== '' &&
+            responseOfErrands.message !== 'Recados buscado com sucesso.'
+        ) {
             handleAlert(responseOfErrands.message, 'error');
         }
     }, [responseOfErrands]);
@@ -84,7 +96,7 @@ function ErrandsPage() {
     const handleArchive = (id: string, filed: boolean) => {
         dispatch(
             attErrand({
-                idUser: getIdLocalStorage(),
+                idUser: userLogged.id,
                 id,
                 dataUpdateErrand: { filed: !filed },
             }),
@@ -94,7 +106,7 @@ function ErrandsPage() {
     const handleCheck = (id: string, check: boolean) => {
         dispatch(
             attErrand({
-                idUser: getIdLocalStorage(),
+                idUser: userLogged.id,
                 id,
                 dataUpdateErrand: { check: !check },
             }),
@@ -107,9 +119,7 @@ function ErrandsPage() {
             return;
         }
 
-        dispatch(
-            getErrands({ idUser: getIdLocalStorage(), filters: { title: search, filed: false } }),
-        );
+        dispatch(getErrands({ idUser: userLogged.id, filters: { title: search, filed: false } }));
         setActiveSearch(true);
         setSearchResult(search);
     };

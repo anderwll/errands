@@ -9,6 +9,7 @@ import MyModalConfirm from '../../components/Errrand/MyModalConfirm';
 import Spinner from '../../components/Spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { attErrand, getErrands, handleErrands } from '../../store/modules/errands/errandsSlice';
+import { User } from '../../store/modules/typeStore';
 
 function FiledPage() {
     const [openModal, setOpenModal] = useState(false);
@@ -23,6 +24,7 @@ function FiledPage() {
     const [searchResult, setSearchResult] = useState('');
     const [activeSearch, setActiveSearch] = useState(false);
 
+    const userLogged = useAppSelector((state) => state.userLogged.data) as User;
     const responseOfErrands = useAppSelector((state) => state.errands);
     const dataOfErrands = useAppSelector(handleErrands);
     const dispatch = useAppDispatch();
@@ -41,20 +43,34 @@ function FiledPage() {
         document.title = 'Arquivados | RecadosApp';
     }, []);
 
+    // --- OBSERVA QUANDO PESQUISAR E RECARREGA PAG --- //
     useEffect(() => {
-        if (!activeSearch) {
-            dispatch(getErrands({ idUser: getIdLocalStorage(), filters: { filed: true } }));
+        if (!activeSearch && userLogged) {
+            dispatch(getErrands({ idUser: userLogged.id, filters: { filed: true } }));
         }
-    }, [dispatch, activeSearch]);
+    }, [activeSearch, userLogged]);
 
+    // --- OBSERVA QUANDO ATT RECADO --- //
+    useEffect(() => {
+        if (responseOfErrands.message === 'Recado atualizado com sucesso.') {
+            dispatch(getErrands({ idUser: userLogged.id, filters: { filed: false } }));
+        }
+    }, [responseOfErrands]);
+
+    // --- OBSERVA QUANDO A PARTE DE ALERTA --- //
     useEffect(() => {
         if (
             !responseOfErrands.loading &&
             responseOfErrands.success &&
-            responseOfErrands.message !== ''
+            responseOfErrands.message !== '' &&
+            responseOfErrands.message !== 'Recados buscado com sucesso.'
         ) {
             handleAlert(responseOfErrands.message, 'success');
-        } else if (!responseOfErrands.success && responseOfErrands.message !== '') {
+        } else if (
+            !responseOfErrands.success &&
+            responseOfErrands.message !== '' &&
+            responseOfErrands.message !== 'Recados buscado com sucesso.'
+        ) {
             handleAlert(responseOfErrands.message, 'error');
         }
     }, [responseOfErrands]);

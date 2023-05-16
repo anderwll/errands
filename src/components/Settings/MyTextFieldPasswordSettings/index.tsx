@@ -31,14 +31,14 @@ function MyTextFieldPasswordSettings({
             label={label}
             type={showPassword && !disabled ? 'text' : 'password'}
             InputProps={{
-                endAdornment: (
+                endAdornment: !disabled && (
                     <InputAdornment position="end">
                         <IconButton
                             aria-label="toggle password visibility"
                             onClick={handleClickShowPassword}
                             onMouseDown={handleMouseDownPassword}
                         >
-                            {showPassword && !disabled ? (
+                            {showPassword ? (
                                 <VisibilityOff sx={{ fontSize: 18 }} />
                             ) : (
                                 <Visibility sx={{ fontSize: 18 }} />

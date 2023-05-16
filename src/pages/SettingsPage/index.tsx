@@ -4,9 +4,13 @@ import React, { useEffect, useState } from 'react';
 
 import MyTextFieldPasswordSettings from '../../components/Settings/MyTextFieldPasswordSettings';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { User } from '../../store/modules/typeStore';
+import { getUserById } from '../../store/modules/userLogged/userLoggedSlice';
+import { attUser } from '../../store/modules/users/usersSlice';
 
 function SettingsPage() {
-    const userLogged = useAppSelector((state) => state.userLogged.data);
+    const userLogged = useAppSelector((state) => state.userLogged.data) as User;
+    const usersLoading = useAppSelector((state) => state.users.loading);
 
     const [info, setInfo] = useState('');
     const [errorName, setErrorName] = useState(false);
@@ -21,11 +25,20 @@ function SettingsPage() {
     const [password, setPassword] = useState<string | undefined>('');
     const [rePassword, setRePassword] = useState<string | undefined>('');
 
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         document.title = 'Configurações | RecadosApp';
     }, []);
+
+    useEffect(() => {
+        if (!usersLoading && userLogged) {
+            dispatch(getUserById(userLogged.id));
+
+            setDisabledName(true);
+            setDisabledPassword(true);
+        }
+    }, [usersLoading]);
 
     useEffect(() => {
         if (userLogged) {
@@ -119,9 +132,7 @@ function SettingsPage() {
     };
 
     const handleUpdate = () => {
-        alert('salvando edição');
-        setDisabledName(true);
-        setDisabledPassword(true);
+        dispatch(attUser({ id: userLogged.id, name, password }));
     };
 
     return (
@@ -136,7 +147,7 @@ function SettingsPage() {
                         Minha conta
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sm={9} md={4}>
+                <Grid item xs={12} sm={9} md={6} lg={4}>
                     {/* --------------------------- NOME -------------------------------------- */}
                     <TextField
                         fullWidth
