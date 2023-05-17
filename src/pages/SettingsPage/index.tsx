@@ -142,12 +142,12 @@ function SettingsPage() {
             </Grid>
 
             <Grid item display="flex" flexDirection="column" alignItems="center">
-                <Grid item mb={3} mt={2}>
-                    <Typography variant="h5" color="#707070" sx={{ fontStyle: 'italic' }}>
-                        Minha conta
-                    </Typography>
-                </Grid>
                 <Grid item xs={12} sm={9} md={6} lg={4}>
+                    <Grid item mb={3} mt={2}>
+                        <Typography variant="h5" sx={{ fontStyle: 'italic' }}>
+                            Minha conta
+                        </Typography>
+                    </Grid>
                     {/* --------------------------- NOME -------------------------------------- */}
                     <TextField
                         fullWidth
@@ -244,6 +244,19 @@ function SettingsPage() {
                         >
                             {disabledPassword ? 'Editar' : 'Salvar'}
                             {!disabledPassword && <Check sx={{ ml: 0.2 }} />}
+                        </Button>
+                    </Grid>
+                    <Grid item mb={3} mt={2}>
+                        <Typography variant="h5" color="red" sx={{ fontStyle: 'italic' }}>
+                            Zona de perigo
+                        </Typography>
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            fullWidth
+                            sx={{ textTransform: 'capitalize', mt: 4 }}
+                        >
+                            Deletar conta
                         </Button>
                     </Grid>
                 </Grid>
