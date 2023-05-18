@@ -168,7 +168,7 @@ function SettingsPage() {
                             <Button
                                 variant="text"
                                 color="inherit"
-                                sx={{ p: 1, textTransform: 'capitalize', mr: 1 }}
+                                sx={{ p: 1, mr: 1 }}
                                 onClick={() => handleDisabled('name', true)}
                             >
                                 Cancelar
@@ -177,7 +177,7 @@ function SettingsPage() {
                         <Button
                             variant={disabledName ? 'outlined' : 'contained'}
                             color={disabledName ? 'primary' : 'secondary'}
-                            sx={{ p: 1, textTransform: 'capitalize' }}
+                            sx={{ p: 1 }}
                             onClick={
                                 disabledName ? () => handleDisabled('name', false) : handleUpdate
                             }
@@ -226,7 +226,7 @@ function SettingsPage() {
                             <Button
                                 variant="text"
                                 color="inherit"
-                                sx={{ p: 1, textTransform: 'capitalize', mr: 1 }}
+                                sx={{ p: 1, mr: 1 }}
                                 onClick={() => handleDisabled('password', true)}
                             >
                                 Cancelar
@@ -235,7 +235,7 @@ function SettingsPage() {
                         <Button
                             variant={disabledPassword ? 'outlined' : 'contained'}
                             color={disabledPassword ? 'primary' : 'secondary'}
-                            sx={{ p: 1, textTransform: 'capitalize' }}
+                            sx={{ p: 1 }}
                             onClick={
                                 disabledPassword
                                     ? () => handleDisabled('password', false)
@@ -247,17 +247,18 @@ function SettingsPage() {
                         </Button>
                     </Grid>
                     <Grid item mb={3} mt={2}>
-                        <Typography variant="h5" color="red" sx={{ fontStyle: 'italic' }}>
+                        <Typography variant="h5" color="#d32f2f" sx={{ fontStyle: 'italic' }}>
                             Zona de perigo
                         </Typography>
-                        <Button
-                            variant="outlined"
-                            color="error"
-                            fullWidth
-                            sx={{ textTransform: 'capitalize', mt: 4 }}
-                        >
-                            Deletar conta
-                        </Button>
+                        <Grid item display="flex" mt={4}>
+                            <Typography variant="body1" sx={{ mr: 2 }}>
+                                Depois de deletar essa conta, não há como voltar atrás. Por favor,
+                                tenha certeza!
+                            </Typography>
+                            <Button variant="outlined" color="error" sx={{ width: 200 }}>
+                                Deletar Conta
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

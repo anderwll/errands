@@ -1,4 +1,4 @@
-import { Check, Close } from '@mui/icons-material';
+import { Check } from '@mui/icons-material';
 import { Modal, Typography, Box, Button } from '@mui/material';
 import React from 'react';
 
@@ -50,7 +50,7 @@ function MyModalConfirm({ idErrand, open, handleClose }: MyModalConfirmProps) {
                 <Box sx={{ mb: 2 }}>
                     <Typography variant="h4">Apagar Recado</Typography>
                     <Typography variant="subtitle1" sx={{ marginTop: '20px' }}>
-                        Tem certeza que deseja excluir permanentemente esse recado?
+                        Tem certeza que deseja excluir esse recado?
                     </Typography>
                     <Typography variant="subtitle1" sx={{ marginTop: '20px' }}>
                         Ao confirmar, não podera mais ser desfeito.
@@ -65,22 +65,17 @@ function MyModalConfirm({ idErrand, open, handleClose }: MyModalConfirmProps) {
                         gap: 1,
                     }}
                 >
+                    <Button variant="text" color="inherit" sx={{ p: 1.2 }} onClick={handleClose}>
+                        Cancelar
+                    </Button>
                     <Button
                         variant="contained"
                         color="secondary"
                         sx={{ p: '9px 15px' }}
                         onClick={handleDelete}
                     >
-                        <Check sx={{ mr: 1 }} />
                         Sim
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ p: 1.2 }}
-                        onClick={handleClose}
-                    >
-                        <Close />
+                        <Check sx={{ ml: 1 }} />
                     </Button>
                 </Box>
             </Box>

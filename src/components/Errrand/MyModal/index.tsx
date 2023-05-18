@@ -192,22 +192,17 @@ function MyModal({ idErrand, open, handleClose }: MyModalProps) {
                         gap: 1,
                     }}
                 >
-                    <Button
-                        variant="text"
-                        color="inherit"
-                        sx={{ p: 1.1, textTransform: 'capitalize' }}
-                        onClick={handleClose}
-                    >
+                    <Button variant="text" color="inherit" sx={{ p: 1.1 }} onClick={handleClose}>
                         Cancelar
                     </Button>
                     <Button
                         variant="contained"
                         color="secondary"
-                        sx={{ p: 1.2, textTransform: 'capitalize' }}
+                        sx={{ p: 1.2 }}
                         onClick={!id ? handleCreate : handleUpdate}
                     >
                         Salvar
-                        <Check sx={{ ml: 0.8 }} />
+                        <Check sx={{ ml: 1 }} />
                     </Button>
                 </Box>
             </Box>
