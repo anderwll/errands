@@ -53,7 +53,7 @@ function FiledPage() {
     // --- OBSERVA QUANDO ATT RECADO --- //
     useEffect(() => {
         if (responseOfErrands.message === 'Recado atualizado com sucesso.') {
-            dispatch(getErrands({ idUser: userLogged.id, filters: { filed: false } }));
+            dispatch(getErrands({ idUser: userLogged.id, filters: { filed: true } }));
         }
     }, [responseOfErrands]);
 
