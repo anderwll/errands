@@ -2,7 +2,9 @@ import { Check } from '@mui/icons-material';
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
+import MyModalConfirm from '../../components/Settings/MyModalConfirm';
 import MyTextFieldPasswordSettings from '../../components/Settings/MyTextFieldPasswordSettings';
+import Spinner from '../../components/Spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { User } from '../../store/modules/typeStore';
 import { getUserById } from '../../store/modules/userLogged/userLoggedSlice';
@@ -13,6 +15,7 @@ function SettingsPage() {
     const usersLoading = useAppSelector((state) => state.users.loading);
 
     const [info, setInfo] = useState('');
+    const [open, setOpen] = useState(false);
     const [errorName, setErrorName] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
     const [errorRePassword, setErrorRePassword] = useState(false);
@@ -135,6 +138,10 @@ function SettingsPage() {
         dispatch(attUser({ id: userLogged.id, name, password }));
     };
 
+    const handleModalConfirm = () => {
+        setOpen(!open);
+    };
+
     return (
         <Grid item>
             <Grid item xs={12}>
@@ -255,13 +262,20 @@ function SettingsPage() {
                                 Depois de deletar essa conta, não há como voltar atrás. Por favor,
                                 tenha certeza!
                             </Typography>
-                            <Button variant="outlined" color="error" sx={{ width: 200 }}>
+                            <Button
+                                variant="outlined"
+                                color="error"
+                                sx={{ width: 200 }}
+                                onClick={handleModalConfirm}
+                            >
                                 Deletar Conta
                             </Button>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
+            <MyModalConfirm open={open} handleClose={handleModalConfirm} />
+            <Spinner />
         </Grid>
     );
 }

@@ -1,11 +1,4 @@
-import {
-    AccountCircle,
-    Menu,
-    Dashboard,
-    Description,
-    Settings,
-    Archive,
-} from '@mui/icons-material';
+import { AccountCircle, Menu, Description, Settings, Archive } from '@mui/icons-material';
 import {
     Avatar,
     Box,
@@ -98,11 +91,11 @@ const MyDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' }
 );
 
 const listItem = [
-    {
-        text: 'Dashboard',
-        path: '/dashboard',
-        icon: <Dashboard />,
-    },
+    // {
+    //     text: 'Dashboard',
+    //     path: '/dashboard',
+    //     icon: <Dashboard />,
+    // },
     {
         text: 'Meus Recados',
         path: '/recados',

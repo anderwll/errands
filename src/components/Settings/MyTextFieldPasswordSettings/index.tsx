@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 interface MyTextFieldPasswordSettingsProps {
     label: string;
     value: string | undefined;
-    disabled: boolean;
+    disabled?: boolean;
     onChange: (e: any) => void;
 }
 

@@ -21,7 +21,6 @@ function FormLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // const responseOfUsers = useAppSelector((state) => state.users);
     const dataOfUsers = useAppSelector(handleUsers);
     const dispatch = useAppDispatch();
 
@@ -45,7 +44,7 @@ function FormLogin() {
     useEffect(() => {
         dispatch(getUsers());
         setIdLocalStorage('');
-    }, [dispatch]);
+    }, [dispatch, navigate]);
 
     const handleValidator = (value: string, type: string) => {
         switch (type) {

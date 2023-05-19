@@ -1,9 +1,12 @@
 import { Delete } from '@mui/icons-material';
 import { Modal, Typography, Box, Button } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from '../../../store/hooks';
-import { deleteErrand } from '../../../store/modules/errands/errandsSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { User } from '../../../store/modules/typeStore';
+import { deleteUser } from '../../../store/modules/users/usersSlice';
+import MyTextFieldPasswordSettings from '../MyTextFieldPasswordSettings';
 
 const style = {
     position: 'absolute' as const,
@@ -11,7 +14,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 385,
-    height: 320,
+    height: 370,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
@@ -22,21 +25,43 @@ const style = {
 };
 
 interface MyModalConfirmProps {
-    idErrand: string;
     open: boolean;
     handleClose: () => void;
 }
 
-function MyModalConfirm({ idErrand, open, handleClose }: MyModalConfirmProps) {
+function MyModalConfirm({ open, handleClose }: MyModalConfirmProps) {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
-    const getIdLocalStorage = () => {
-        return JSON.parse(localStorage.getItem('idUserLogged') || '');
+    const [info, setInfo] = useState('');
+    const [password, setPassword] = useState('');
+
+    const userLogged = useAppSelector((state) => state.userLogged.data) as User;
+
+    useEffect(() => {
+        setInfo('');
+        setPassword('');
+    }, [open]);
+
+    const handleChange = (value: string) => {
+        setPassword(value);
     };
 
     const handleDelete = () => {
-        dispatch(deleteErrand({ idUser: getIdLocalStorage(), id: idErrand }));
-        handleClose();
+        if (!password) {
+            setInfo('Necessário digitar sua senha.');
+            return;
+        }
+
+        if (password !== userLogged.password) {
+            setInfo('Senha inválida.');
+            return;
+        }
+
+        dispatch(deleteUser(userLogged.id));
+        setTimeout(() => {
+            navigate('/');
+        }, 2000);
     };
 
     return (
@@ -48,12 +73,20 @@ function MyModalConfirm({ idErrand, open, handleClose }: MyModalConfirmProps) {
         >
             <Box sx={style}>
                 <Box sx={{ mb: 2 }}>
-                    <Typography variant="h4">Apagar Recado</Typography>
+                    <Typography variant="h4">Deletar Conta</Typography>
                     <Typography variant="subtitle1" sx={{ marginTop: '20px' }}>
-                        Tem certeza que deseja excluir esse recado?
+                        Atenção!! Tem certeza que deseja deletar essa conta? Para confirmar digite
+                        sua senha.
                     </Typography>
-                    <Typography variant="subtitle1" sx={{ marginTop: '20px' }}>
-                        Ao confirmar, não podera mais ser desfeito.
+
+                    <MyTextFieldPasswordSettings
+                        label="Digite sua senha"
+                        value={password}
+                        onChange={(e) => handleChange(e.target.value)}
+                    />
+
+                    <Typography variant="caption" color="orange">
+                        {info}
                     </Typography>
                 </Box>
                 <Box
@@ -74,7 +107,7 @@ function MyModalConfirm({ idErrand, open, handleClose }: MyModalConfirmProps) {
                         sx={{ p: '9px 15px' }}
                         onClick={handleDelete}
                     >
-                        Apagar
+                        Deletar conta
                         <Delete sx={{ ml: 1 }} />
                     </Button>
                 </Box>
