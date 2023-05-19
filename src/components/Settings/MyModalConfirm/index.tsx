@@ -59,6 +59,7 @@ function MyModalConfirm({ open, handleClose }: MyModalConfirmProps) {
         }
 
         dispatch(deleteUser(userLogged.id));
+        handleClose();
         setTimeout(() => {
             navigate('/');
         }, 2000);
@@ -80,6 +81,7 @@ function MyModalConfirm({ open, handleClose }: MyModalConfirmProps) {
                     </Typography>
 
                     <MyTextFieldPasswordSettings
+                        isColorError
                         label="Digite sua senha"
                         value={password}
                         onChange={(e) => handleChange(e.target.value)}

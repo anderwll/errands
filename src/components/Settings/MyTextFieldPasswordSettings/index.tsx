@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 interface MyTextFieldPasswordSettingsProps {
     label: string;
+    isColorError?: boolean;
     value: string | undefined;
     disabled?: boolean;
     onChange: (e: any) => void;
@@ -11,6 +12,7 @@ interface MyTextFieldPasswordSettingsProps {
 
 function MyTextFieldPasswordSettings({
     label,
+    isColorError,
     value,
     disabled,
     onChange,
@@ -27,6 +29,7 @@ function MyTextFieldPasswordSettings({
         <TextField
             fullWidth
             disabled={disabled}
+            color={isColorError ? 'error' : 'primary'}
             variant="outlined"
             label={label}
             type={showPassword && !disabled ? 'text' : 'password'}

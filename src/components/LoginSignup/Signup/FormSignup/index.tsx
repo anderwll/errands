@@ -143,6 +143,8 @@ function FormSignup() {
             return;
         }
 
+        if (error) return;
+
         dispatch(saveUser({ name, email, password }));
     };
 

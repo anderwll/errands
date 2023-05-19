@@ -27,7 +27,7 @@ function App() {
     };
 
     useEffect(() => {
-        if (getIdLocalStorage()) {
+        if (getIdLocalStorage) {
             dispatch(getUserById(getIdLocalStorage()));
         }
     }, []);

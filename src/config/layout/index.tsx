@@ -119,6 +119,7 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
 
     const [open, setOpen] = useState(false);
     const name = useAppSelector((state) => state.userLogged.data?.name);
+    // const userLogged = useAppSelector((state) => state.userLogged.data);
     const navigate = useNavigate();
     const theme = useTheme();
 
@@ -127,7 +128,7 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
     };
 
     useEffect(() => {
-        if (!getIdLocalStorage()) {
+        if (!getIdLocalStorage) {
             navigate('/');
         }
     }, [navigate]);
