@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import MyMenu from '../../components/LayoutDefault/MyMenu';
 import { useAppSelector } from '../../store/hooks';
@@ -119,9 +119,10 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
 
     const [open, setOpen] = useState(false);
     const name = useAppSelector((state) => state.userLogged.data?.name);
-    // const userLogged = useAppSelector((state) => state.userLogged.data);
     const navigate = useNavigate();
     const theme = useTheme();
+
+    const location = useLocation();
 
     const getIdLocalStorage = () => {
         return JSON.parse(localStorage.getItem('idUserLogged') || '');
@@ -176,12 +177,16 @@ function LayoutDefault({ component }: LayoutDefaultProps) {
                     </Toolbar>
                 </AppBar>
                 <MyDrawer variant="permanent" open={open}>
-                    <List sx={{ marginTop: '65px' }}>
+                    <List sx={{ marginTop: '58px' }}>
                         {listItem.map((item) => (
                             <ListItem
                                 key={item.text}
                                 disablePadding
-                                sx={{ display: 'block' }}
+                                sx={{
+                                    display: 'block',
+                                    background:
+                                        item.path === location.pathname ? '#c9c9c9' : 'transparent',
+                                }}
                                 onClick={() => navigate(item.path)}
                             >
                                 <ListItemButton
